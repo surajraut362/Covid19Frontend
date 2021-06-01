@@ -173,7 +173,6 @@ class ModifyPatientStatus extends Component {
     this.service
       .modifyPatientStatus(this.state.status)
       .then((data) => {
-        alert(JSON.stringify(data));
         // redirect you to Home component after adding user
         // this.props.history.push("/patients");
       })
@@ -187,11 +186,12 @@ class ModifyPatientStatus extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
         <div className="row">
+          <div className="col-2"></div>
           <div
-            className="col-lg-6 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "lightblue" }}
+            className="col-lg-8 col-md-6 col-xs-12 my-4"
+            style={{ backgroundColor: "#8b9dc3" }}
           >
             <form onSubmit={this.handleSubmit}>
               <h1 align="center" className="mt-2">
@@ -299,7 +299,7 @@ class ModifyPatientStatus extends Component {
                   }
                 />
               </div>
-              <button type="submit" className="btn btn-primary my-2">
+              <button type="submit" className="btn btn-warning my-2">
                 Modify Status
               </button>
             </form>

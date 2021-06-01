@@ -4,6 +4,7 @@ import { Hospital } from "../../model/Hospital";
 import { PatientService } from "../../service/patientservice/PatientService";
 import axios from "axios";
 import Select from "react-select";
+import "../hompepage/style.css";
 
 class AddPatient extends Component {
   service = new PatientService();
@@ -132,11 +133,12 @@ class AddPatient extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
         <div className="row">
+          <div className="col-2"></div>
           <div
-            className="col-lg-6 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "lightblue" }}
+            className="col-lg-8 col-md-6 col-xs-12 my-4"
+            style={{ backgroundColor: "#8b9dc3" }}
           >
             <form onSubmit={this.handleSubmit}>
               <h1 align="center" className="mt-2">
@@ -160,6 +162,7 @@ class AddPatient extends Component {
               </div>
 
               <div className="form-group">
+                <label>Enter Firstname:</label>
                 <div className="alert-danger">
                   {this.state.error.fnameError}
                 </div>
@@ -180,6 +183,7 @@ class AddPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Enter Lastname:</label>
                 <div className="alert-danger">
                   {this.state.error.lnameError}
                 </div>
@@ -200,6 +204,7 @@ class AddPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Enter Mobile Number:</label>
                 <div className="alert-danger">
                   {this.state.error.numberError}
                 </div>
@@ -220,6 +225,7 @@ class AddPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Enter Age:</label>
                 <div className="alert-danger">{this.state.error.ageError}</div>
                 <input
                   type="text"
@@ -247,7 +253,6 @@ class AddPatient extends Component {
                   id="patientGender"
                   value={this.state.patient.patientGender}
                   onChange={(event) => {
-                    alert(event.currentTarget.value);
                     this.setState({
                       patient: {
                         ...this.state.patient,
@@ -264,7 +269,7 @@ class AddPatient extends Component {
                 </select>
               </div>
 
-              <button type="submit" className="btn btn-primary my-2">
+              <button type="submit" className="btn btn-warning my-2">
                 Add Patient
               </button>
             </form>

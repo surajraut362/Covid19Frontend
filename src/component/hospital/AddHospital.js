@@ -1,4 +1,4 @@
-import { ThreeSixty } from "@material-ui/icons";
+import { AddCircle, AddLocation, ThreeSixty } from "@material-ui/icons";
 import React, { Component, component } from "react";
 import { Admin } from "../../model/Admin";
 import { Hospital } from "../../model/Hospital";
@@ -9,6 +9,8 @@ import axios from "axios";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import { HospitalService } from "../../service/hospitalservice/HospitalService";
+import "../../styles/design.css";
+import { Button, Icon, IconButton } from "@material-ui/core";
 
 class AddHospital extends Component {
   async getOptions() {
@@ -49,7 +51,6 @@ class AddHospital extends Component {
     this.getOptions();
     this.getOptions1();
     let service = new AdminService();
-    alert("hello");
     service
       .getAdminCredentials(JSON.parse(sessionStorage.getItem("username")))
       .then((result) => {
@@ -126,7 +127,6 @@ class AddHospital extends Component {
       return false;
     }
     let service = new AdminService();
-    alert(JSON.stringify(this.state.hospital));
     service
       .addHospital(
         this.state.hospital,
@@ -144,149 +144,138 @@ class AddHospital extends Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        style={{ borderStyle: "solid", marginTop: "50px" }}
-      >
-        <h1>
-          <span className="badge badge-dark">Add Hospital</span>
-        </h1>
-        {/* <div className="form-group mr2">
-                        <div className="alert-danger">{this.state.error.idError}</div>
-                        <input
-                        type="text"
-                        className="form-control"
-                        id="adminId"
-                        placeholder="Enter admin Id"
-                        value={this.state.admin.adminId}
-                        onChange={(event) =>
-                        this.setState({admin: { ...this.state.admin, adminId: event.target.value } })
-                        }
-          />
-                        </div>   */}
-        {/* <div className="form-group">
-          <div className="alert-danger">{this.state.error.idError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="hospitalId"
-            placeholder="Enter Hospital Id"
-            value={this.state.hospital.hospitalId}
-            onChange={(event) =>
-              this.setState({ hospital: { ...this.state.hospital, hospitalId: event.target.value } })
-            }
-          />
-        </div> */}
-        <div className="form-group" style={{ backgroundColor: "#C7D2FE" }}>
-          <div className="alert-danger">{this.state.error.NameError}</div>
-          <input
-            style={{}}
-            type="text"
-            className="form-control"
-            id="hospitalName"
-            placeholder="Enter hospital Name"
-            value={this.state.hospital.hospitalName}
-            onChange={(event) =>
-              this.setState({
-                hospital: {
-                  ...this.state.hospital,
-                  hospitalName: event.target.value,
-                },
-              })
-            }
-          />
-        </div>
-        {/* <div className="form-group">
-          <div className="alert-danger">{this.state.error.ZoneError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="hospitalZone"
-            placeholder="Enter hospital Zone"
-            value={this.state.hospital.hospitalZone}
-            onChange={(event) =>
-              this.setState({ hospital: { ...this.state.hospital, hospitalZone: event.target.value } })
-            }
-          />
-        </div> */}
-        {/* <div className="form-group">
-          <div className="alert-danger">{this.state.error.TypeError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="hospitalType"
-            placeholder="Enter hospital Type"
-            value={this.state.hospital.hospitalType}
-            onChange={(event) =>
-              this.setState({ hospital: { ...this.state.hospital, hospitalType: event.target.value } })
-            }
-          />
-        </div> */}
-        <div className="form-group">
-          <div className="alert-danger">{this.state.error.GeneralBedError}</div>
-          <input
-            style={{ marginTop: "25px" }}
-            type="text"
-            className="form-control"
-            id="hospitalGeneralBed"
-            placeholder="Enter hospital General Bed"
-            value={this.state.hospital.hospitalGeneralBed}
-            onChange={(event) =>
-              this.setState({
-                hospital: {
-                  ...this.state.hospital,
-                  hospitalGeneralBed: event.target.value,
-                },
-              })
-            }
-          />
-        </div>
-        <div className="form-group">
-          <div className="alert-danger">{this.state.error.ICUBedError}</div>
-          <input
-            style={{ marginTop: "25px" }}
-            type="text"
-            className="form-control"
-            id="hospitalICUBed"
-            placeholder="Enter hospital ICU Bed"
-            value={this.state.hospital.hospitalICUBed}
-            onChange={(event) =>
-              this.setState({
-                hospital: {
-                  ...this.state.hospital,
-                  hospitalICUBed: event.target.value,
-                },
-              })
-            }
-          />
-          <br></br>
-          <div>
-            <Select
-              options={this.state.selectOptions}
-              onChange={this.handleChange.bind(this)}
-              placeholder="Select Hospital Zone"
-            />
-            <Link to="/AddHospitalZone">
-              <button style={{ marginLeft: "970px" }}>Add Hospital Zone</button>
-            </Link>
-          </div>
-          <br />
-          <div>
-            <Select
-              options={this.state.selectOptions1}
-              onChange={this.handleChange1.bind(this)}
-              placeholder="Select Hospital Type"
-            ></Select>
+      // <form
+      //   onSubmit={this.handleSubmit}
+      //   style={{ borderStyle: "solid", marginTop: "50px" }}
+      // >
+      //   <h1>
+      //     <span className="badge badge-dark">Add Hospital</span>
+      //   </h1>
+      <div className="container-fluid px-1 py-5 mx-auto">
+        <div className="row d-flex justify-content-center">
+          <div className="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div className="card">
+              <h5 className="text-center mb-4">Add Hospital</h5>
+              <form className="form-card" onSubmit={this.handleSubmit}>
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-12 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter Hospital Name<span className="text-danger"> *</span>
+                    </label>
+
+                    <div className="alert-danger">
+                      {this.state.error.NameError}
+                    </div>
+                    <input
+                      style={{}}
+                      type="text"
+                      className="form-control"
+                      id="hospitalName"
+                      placeholder="Enter hospital Name"
+                      value={this.state.hospital.hospitalName}
+                      onChange={(event) =>
+                        this.setState({
+                          hospital: {
+                            ...this.state.hospital,
+                            hospitalName: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter General Bed<span className="text-danger"> *</span>
+                    </label>
+                    <div className="alert-danger">
+                      {this.state.error.GenerelBed}
+                    </div>
+
+                    <input
+                      // style={{ marginTop: "25px" }}
+                      type="number"
+                      min={0}
+                      className="form-control"
+                      id="hospitalGeneralBed"
+                      placeholder="General Beds"
+                      value={this.state.hospital.hospitalGeneralBed}
+                      onChange={(event) =>
+                        this.setState({
+                          hospital: {
+                            ...this.state.hospital,
+                            hospitalGeneralBed: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter ICU Bed
+                      <span className="text-danger"> *</span>
+                    </label>
+                    <div className="alert-danger">
+                      {this.state.error.ICUBed}
+                    </div>
+
+                    <input
+                      // style={{ marginTop: "25px" }}
+                      type="number"
+                      min={0}
+                      className="form-control"
+                      id="hospitalICUBed"
+                      placeholder="ICU Bed"
+                      value={this.state.hospital.hospitalICUBed}
+                      onChange={(event) =>
+                        this.setState({
+                          hospital: {
+                            ...this.state.hospital,
+                            hospitalICUBed: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-11 flex-column d-flex">
+                    <Select
+                      options={this.state.selectOptions}
+                      onChange={this.handleChange.bind(this)}
+                      placeholder="Select Hospital Zone"
+                    />
+                  </div>
+
+                  <div className="form-group col-1 flex-column d-flex">
+                    <IconButton>
+                      <Link
+                        to="/AddHospitalZone"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <AddCircle fontSize="large" className="text-primary" />
+                      </Link>
+                    </IconButton>
+                  </div>
+                </div>
+                <div>
+                  <Select
+                    options={this.state.selectOptions1}
+                    onChange={this.handleChange1.bind(this)}
+                    placeholder="Select Hospital Type"
+                  ></Select>
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                  Add Hospital
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          style={{ marginLeft: "500px" }}
-        >
-          Add Hospital
-        </button>
-      </form>
+      </div>
     );
   }
 }

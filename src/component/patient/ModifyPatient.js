@@ -3,6 +3,7 @@ import { Patient } from "../../model/Patient";
 import { PatientService } from "../../service/patientservice/PatientService";
 import Select from "react-select";
 import axios from "axios";
+import "../hompepage/style.css";
 
 class ModifyPatient extends Component {
   service = new PatientService();
@@ -128,18 +129,21 @@ class ModifyPatient extends Component {
         alert("patient updated...");
         this.props.history.push("/patients");
       })
-      .catch(() => {});
+      .catch(() => {
+        alert("Something went wrong");
+      });
     // redirect you to Home component after adding user
     // this.props.history.push("/students");
   };
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
         <div className="row">
+          <div className="col-2"></div>
           <div
-            className="col-lg-6 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "lightblue" }}
+            className="col-lg-8 col-md-6 col-xs-12 my-4"
+            style={{ backgroundColor: "#8b9dc3" }}
           >
             <form onSubmit={this.handleSubmit}>
               <h3 align="center" className="mt-2">
@@ -163,6 +167,7 @@ class ModifyPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Firstname:</label>
                 <div className="alert-danger">{this.state.error.nameError}</div>
                 <input
                   type="text"
@@ -181,6 +186,7 @@ class ModifyPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Lastname:</label>
                 <div className="alert-danger">
                   {this.state.error.scoreError}
                 </div>
@@ -201,6 +207,7 @@ class ModifyPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Mobile Number:</label>
                 <div className="alert-danger">
                   {this.state.error.scoreError}
                 </div>
@@ -221,6 +228,7 @@ class ModifyPatient extends Component {
                 />
               </div>
               <div className="form-group">
+                <label>Age:</label>
                 <div className="alert-danger">
                   {this.state.error.scoreError}
                 </div>
@@ -263,7 +271,7 @@ class ModifyPatient extends Component {
                   <option>Female</option>
                 </select>
               </div>
-              <button type="submit" className="btn btn-primary my-2">
+              <button type="submit" className="btn btn-warning my-2">
                 Update Patient
               </button>
             </form>

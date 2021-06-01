@@ -7,4 +7,5 @@ export class Admin {
   adminPassword = "";
   adminUserName = "";
   hospitals = [];
+  adminEmailId = "";
 }

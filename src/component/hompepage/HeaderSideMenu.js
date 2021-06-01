@@ -20,10 +20,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Link } from "react-router-dom";
-import LogoutComponent from "../hospital/LogoutComponent";
+import { Link, Route } from "react-router-dom";
+import LogoutComponent from "../pages/LogoutComponent";
 import { AccountCircle } from "@material-ui/icons";
-const drawerWidth = 170;
+import { Footer } from "./Footer";
+import Routes from "../../Routes";
+import header from "../images/header.png";
+import { Box, Grid } from "@material-ui/core";
+const drawerWidth = 150;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -168,74 +172,71 @@ function HeaderSideMenu(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.appHeader}>
-            Covid19Tracker
-          </Typography>
+          <Box>
+            <Link to="/">
+              <h6 className={classes.appHeader}>
+                <img src={header} style={{ width: 40 }} />
+                Covid19Tracker
+              </h6>
+            </Link>
+          </Box>
           <Typography
             className={clsx(classes.userName, {
               [classes.userNameShift]: open,
             })}
           >
-            <div className="col-4 ml-auto">
-              <div className="col-2 text-secondary">
-                {userName ? (
-                  <Button
-                    aria-controls="profile-menu"
-                    aria-haspopup="false"
-                    onClick={handleClick}
-                  >
-                    <AccountCircle />
-                    {userName["username"]}
-                  </Button>
-                ) : (
-                  <Link to="/login">
-                    <Button>
-                      <ExitToAppIcon />
-                      Login
-                    </Button>
-                  </Link>
-                )}
-              </div>
-              <Menu
-                id="profile-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+            {userName ? (
+              <Button
+                aria-controls="profile-menu"
+                aria-haspopup="false"
+                onClick={handleClick}
               >
-                <MenuItem>
-                  <Button data-toggle="modal" data-target="#logoutModal">
-                    Logout
-                  </Button>
-                </MenuItem>
-                <MenuItem>
-                  <Button>
-                    <Link to="/dashboard">
-                      <ListItemText secondary="Dashboard" />
-                    </Link>
-                  </Button>
-                </MenuItem>
-              </Menu>
+                <AccountCircle />
+                {userName["username"]}
+              </Button>
+            ) : (
+              <Link to="/login">
+                <Button>
+                  <ExitToAppIcon />
+                  Login
+                </Button>
+              </Link>
+            )}
 
-              <div
-                class="modal fade "
-                id="logoutModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <LogoutComponent
-                  {...props}
-                  setUserName={() => setUserName(null)}
-                />
-              </div>
-            </div>
+            <Menu
+              id="profile-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem>
+                <Button data-toggle="modal" data-target="#logoutModal">
+                  Logout
+                </Button>
+              </MenuItem>
+              <MenuItem>
+                <Button>
+                  <Link to="/dashboard">
+                    <ListItemText secondary="Dashboard" />
+                  </Link>
+                </Button>
+              </MenuItem>
+            </Menu>
           </Typography>
+          <div
+            class="modal fade "
+            id="logoutModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <LogoutComponent {...props} setUserName={() => setUserName(null)} />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
-        className={classes.drawer}
         variant="persistent"
         anchor="left"
         open={open}
@@ -243,7 +244,7 @@ function HeaderSideMenu(props) {
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.drawerHeader}>
-          <Typography className={classes.menuTitle}>Menu</Typography>
+          <h5 className={classes.menuTitle}>Menu</h5>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -252,70 +253,44 @@ function HeaderSideMenu(props) {
             )}
           </IconButton>
         </div>
-        <Divider />
-        <List className={classes.sideBarMenu}>
-          <ListItem button>
-            <Link to="/" className={classes.link}>
-              <ListItemText secondary="Home" />
-            </Link>
-          </ListItem>
-          {/* <ListItem button>
-            <Link to="/dashboard" className={classes.link}>
-              <ListItemText secondary="Dashboard" />
-            </Link>
-          </ListItem>
-          
-          <ListItem button>
-            <Link to="/admins" className={classes.link}>
-              <ListItemText secondary="Admins" />
-            </Link>
-            <ListItem button>
-        
-            <Link to="/patients" className={classes.link}>
-              <ListItemText secondary="Patients" />
-            </Link>
-            <ListItem button>
-            <Link to="/hospitals" className={classes.link}>
-              <ListItemText secondary="Hospitals" />
-            </Link>
-          </ListItem> */}
-          <ListItem button>
-            <Link to="/guidelines" className={classes.link}>
-              <ListItemText secondary="Guidelines" />
-            </Link>
-          </ListItem>
+
+        <List className={classes.drawer}>
+          <Divider />
+
           {userName != null ? (
             <>
               <ListItem button>
                 <Link to="/dashboard" className={classes.link}>
-                  <ListItemText secondary="Dashboard" />
+                  DashBoard
                 </Link>
               </ListItem>
 
               <ListItem button>
                 <Link to="/admins" className={classes.link}>
-                  <ListItemText secondary="Admins" />
+                  Admin
                 </Link>
               </ListItem>
               <ListItem button>
                 <Link to="/patients" className={classes.link}>
-                  <ListItemText secondary="Patients" />
+                  Patient
                 </Link>
               </ListItem>
               <ListItem button>
                 <Link to="/hospitals" className={classes.link}>
-                  <ListItemText secondary="Hospitals" />
+                  Hospital
                 </Link>
               </ListItem>
             </>
           ) : (
             <></>
           )}
-          <ListItem button>
-            <Link to="/contactus" className={classes.link}>
-              <ListItemText secondary="Contact Us" />
-            </Link>
-          </ListItem>
+
+          <Link to="/guidelines" className={classes.link}>
+            <ListItem button>GuideLines</ListItem>
+          </Link>
+          <Link to="/contactus" className={classes.link}>
+            <ListItem button>Contact Us</ListItem>
+          </Link>
         </List>
       </Drawer>
       <main
@@ -324,9 +299,6 @@ function HeaderSideMenu(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {/* <Typography>
-Body
-        </Typography> */}
       </main>
     </div>
   );

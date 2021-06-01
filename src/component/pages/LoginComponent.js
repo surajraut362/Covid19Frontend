@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Login } from "../../model/Login";
 import { AdminService } from "../../service/adminservice/AdminService";
+
 export default class LoginComponent extends Component {
   componentDidMount() {
     if (sessionStorage.getItem("username") !== null) {
@@ -47,12 +48,10 @@ export default class LoginComponent extends Component {
     service
       .getAdminCredentials(this.state.login)
       .then((result) => {
-        alert(JSON.stringify(result.data));
         if (result != null) {
           sessionStorage.setItem("username", JSON.stringify(this.state.login));
           this.props.history.push("/welcome");
         } else {
-          alert("Hello");
           this.setState({
             error: { invalidCredentials: "Invalid Credentials" },
           });
@@ -69,26 +68,11 @@ export default class LoginComponent extends Component {
     }
     return (
       <form onSubmit={this.handleSubmit}>
-        <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-          <div class="card card0 border-0">
-            <div class="row d-flex">
-              <div class="col-lg-6">
-                <div class="card1 pb-5">
-                  <div class="row">
-                    {" "}
-                    <img src="../images/logo.jpeg" class="logo" />
-                  </div>
-                  <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-                    {" "}
-                    <img src="../images/doctor.jpg" class="image" />{" "}
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="card2 card border-0 px-4 py-5">
-                  <br></br>
-                  <br></br>
-                  <br></br>
+        <div class="container-fluid   ">
+          <div class="card card-img-overlay">
+            <div class="row ">
+              <div class="col-lg-12 d-flex justify-content-center">
+                <div class="card2 card border-0  px-4 py-5">
                   <div class="row px-3">
                     {" "}
                     <div className="alert-danger">
@@ -157,14 +141,14 @@ export default class LoginComponent extends Component {
                   </div>
                   <div class="row mb-3 px-3">
                     {" "}
-                    <button type="submit" class="btn btn-blue text-center">
+                    <button type="submit" class="btn btn-primary text-center">
                       Login
                     </button>{" "}
                   </div>
                 </div>
               </div>
             </div>
-            <div class="bg-blue py-4">
+            {/* <div class="bg-primary py-4">
               <div class="row px-3">
                 {" "}
                 <small class="ml-4 ml-sm-5 mb-2">
@@ -178,7 +162,7 @@ export default class LoginComponent extends Component {
                   <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span>{" "}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </form>

@@ -1,38 +1,27 @@
+import { CssBaseline } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import LoginComponent from "./component/hospital/LoginComponent";
-import { Login } from "./model/Login";
-import AdminDashBoard from "./component/admin/AdminDashBoard";
-import HomePage from "./component/hompepage/HomePage";
+import "./App.css";
 import { Footer } from "./component/hompepage/Footer";
-import HeaderSideMenuFooter from "./component/hompepage/HeaderSideMenu";
-import AddHospital from "./component/hospital/AddHospital";
-import LogoutComponent from "./component/hospital/LogoutComponent";
-import AddAdmin from "./component/admin/AddAdmin";
-import UpdateHospital from "./component/hospital/UpdateHospital";
-
-import DeleteHospital from "./component/hospital/DeleteHospital";
-import adminHomepage from "./component/admin/Adminhomepage";
-import AllAdminPage from "./component/admin/AllAdminPage";
-import AllHospitalPage from "./component/hospital/AllHospitalPage";
-import ViewPatient from "./component/patient/ViewPatient";
-import AddPatient from "./component/patient/AddPatient";
-import ModifyPatient from "./component/patient/ModifyPatient";
-
-import AddPatientTest from "./covidtest/AddPatientTest";
-import ModifyPatientStatus from "./component/status/ModifyPatientStatus";
+import HeaderSideMenu from "./component/hompepage/HeaderSideMenu";
+import Routes from "./Routes";
 
 function App() {
   return (
-    <div className="container-fluid">
-      <Router>
-        {/* <Switch>
+    <>
+      <div className="container-fluid ">
+        <Router>
+          {/* <HeaderSideMenu /> */}
+          {/* <Switch>
         <Route exact path="/" component={Home1}/>
         <Route exact path="/addAdmin" component={AddAdmin}/> */}
 
-        {/* </Switch> */}
+          {/* </Switch> */}
 
-        <Route component={HeaderSideMenuFooter} />
-        <Switch>
+          <Route component={HeaderSideMenu} />
+          <Routes />
+        </Router>
+
+        {/* <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginComponent} />
           <Route exact path="/welcome" component={AdminDashBoard} />
@@ -50,11 +39,15 @@ function App() {
 
           <Route exact path="/addHospital" component={AddHospital} />
           <Route exact path="/logout" component={LogoutComponent} />
+          <Route exact path="/AddHospitalZone" component={AddHospitalZone} />
           <Route exact path="/patients" component={ViewPatient} />
           <Route exact path="/addpatienttest" component={AddPatientTest} />
         </Switch>
-      </Router>
-    </div>
+      </Router> */}
+      </div>
+
+      <Footer />
+    </>
   );
 }
 

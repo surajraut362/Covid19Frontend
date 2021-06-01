@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Patient } from "../model/Patient";
-import { CovidTest } from "../model/CovidTest";
-import { PatientService } from "../service/patientservice/PatientService";
+import { Patient } from "../../model/Patient";
+import { CovidTest } from "../../model/CovidTest";
+import { PatientService } from "../../service/patientservice/PatientService";
 import axios from "axios";
 import Select from "react-select";
+import "../hompepage/style.css";
 
 class AddPatientTest extends Component {
   service = new PatientService();
@@ -115,11 +116,12 @@ class AddPatientTest extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
         <div className="row">
+          <div className="col-2"></div>
           <div
-            className="col-lg-6 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "lightblue" }}
+            className="col-lg-8 col-md-6 col-xs-12 my-4"
+            style={{ backgroundColor: "#8b9dc3" }}
           >
             <form onSubmit={this.handleSubmit}>
               <h3 align="center" className="mt-2">
@@ -187,7 +189,7 @@ class AddPatientTest extends Component {
                   <option>Positive</option>
                 </select>
               </div>
-              <button type="submit" className="btn btn-primary my-2">
+              <button type="submit" className="btn btn-warning my-2">
                 Add Patient Test
               </button>
             </form>

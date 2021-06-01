@@ -50,7 +50,6 @@ class UpdateHospital extends Component {
         alert(JSON.stringify("error: " + error));
       });
     let service = new AdminService();
-    alert("hello");
     service
       .getAdminCredentials(JSON.parse(sessionStorage.getItem("username")))
       .then((result) => {
@@ -94,7 +93,6 @@ class UpdateHospital extends Component {
     this.service
       .modifyHospital(this.state.hospital)
       .then((data) => {
-        alert(JSON.stringify(data));
         alert("Hospital Information Updated Successfully");
         // redirect you to viewallvendor page after updating
         this.props.history.push("/hospitals");

@@ -1,13 +1,12 @@
-#footer{
-    
-    
-    background-color: #ededed;
-
-    
+#footer {
+  background-color: #ededed;
 }
 
-
 .navbar-custom {
-    background-color: #ededed;
-    border-color: #ededed;
+  background-color: #ededed;
+  border-color: #ededed;
+}
+
+html {
+  background-color: #dfe3ee;
 }

@@ -124,9 +124,9 @@ export default class HomePage extends Component {
               <Tabs
                 defaultActiveKey="profile"
                 id="uncontrolled-tab-example"
-                className="ml-2"
+                className="ml-2 mb-auto"
               >
-                <Tab eventKey="home" title="Saving Lives">
+                <Tab eventKey="home" title="Saving">
                   <Mycards3 />
                 </Tab>
                 <Tab eventKey="profile" title="Helping Hands" align="center">
@@ -179,7 +179,6 @@ export default class HomePage extends Component {
           </Card>
           </div>
         </div> */}
-        <Footer />
       </div>
     );
   }

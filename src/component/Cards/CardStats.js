@@ -14,14 +14,14 @@ import { blue } from "@material-ui/core/colors";
 
 function CardStats({ subtitle, title, footer, icon, color }) {
   const theme = useTheme();
+  // alert("Hello" + title);
   return (
     <>
       <Card elevation={10} style={{ borderRadius: 10 }}>
         <CardContent>
           <Grid container component={Box} justifyContent="space-between">
-            <Grid item xs="auto" style={{}}>
+            <Grid item xs="auto">
               <Box
-                component={Typography}
                 variant="h6"
                 marginBottom="0!important"
                 marginTop="0!important"
@@ -61,18 +61,10 @@ function CardStats({ subtitle, title, footer, icon, color }) {
                     component={icon}
                     width="1.5rem!important"
                     height="1.5rem!important"
-                    color={blue[50]}
-                    color={color}
                   />
                 ) : null}
                 {icon && typeof icon === "string" ? (
-                  <Box
-                    component="i"
-                    fontSize="1.25rem"
-                    className={icon}
-                    color={blue[50]}
-                    color={color}
-                  />
+                  <Box component="i" fontSize="1.25rem" className={icon} />
                 ) : null}
               </Box>
             </Grid>
@@ -81,9 +73,11 @@ function CardStats({ subtitle, title, footer, icon, color }) {
             <Box
               component="p"
               fontSize=".875rem"
+              color={color[200]}
               marginTop="1rem"
               marginBottom="0"
               display="flex"
+              fontWeight="600"
               alignItems="center"
               flexWrap="wrap"
             >

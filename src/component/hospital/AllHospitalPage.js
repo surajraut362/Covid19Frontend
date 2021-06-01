@@ -7,7 +7,14 @@ import { Button } from "react-bootstrap";
 import { HospitalType } from "../../model/HospitalType";
 import MaterialTable from "material-table";
 import FilterNoneIcon from "@material-ui/icons/FilterNone";
-import { Search, ArrowUpward, Delete, Cancel } from "@material-ui/icons";
+import {
+  Search,
+  ArrowUpward,
+  Delete,
+  Cancel,
+  ChevronLeftTwoTone,
+  ChevronRightTwoTone,
+} from "@material-ui/icons";
 import { Hospital } from "../../model/Hospital";
 import { AdminService } from "../../service/adminservice/AdminService";
 import { HospitalService } from "../../service/hospitalservice/HospitalService";
@@ -39,36 +46,17 @@ export default class AllHospitalPage extends Component {
     // let service=new HospitalService();
     // service.getAllHospitals().
     let service = new AdminService();
-    alert("hello");
+    // alert("hello");
     service
       .getAdminCredentials(JSON.parse(sessionStorage.getItem("username")))
       .then((result) => {
-        alert(JSON.stringify(result.data));
+        // alert(JSON.stringify(result.data));
         this.setState({
           hospitals: result.data.hospitals,
         });
       });
   }
-  // const [muiTableKey, setMuiTableKey] = React.useState(0);
-  // const [data, setData] = useState([])
-  // const columns = [
-  //   { field: 'hospitalName', title: 'Hospital Name' },
-  //   { field: 'hospitalGeneralBed', title: 'General Bed' },
-  //   { field: 'hospitalICUBed', title: 'ICU Bed' },
-  //   { field: 'hospitalType.typeName', title: 'Type Name' },
-  //   { field: 'hospitalZone.zoneName', title: 'Zone Name ' },
 
-  // ]
-
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("username") === null) {
-  //     history.push("/");
-  //   }
-  //   fetch(`http://localhost:9090/CovidTracker.com/hospital/`)
-  //     .then(resp => resp.json())
-  //     .then(resp => setData(resp))
-  //   // fetchHospitals();
-  // }, []);
   render() {
     return (
       <div className="col-md-12 mt-4 ">
@@ -76,7 +64,7 @@ export default class AllHospitalPage extends Component {
           <Button>Add Hospital</Button>
         </Link>
         <h1>
-          <span className="badge badge-dark">View Hospitals</span>
+          <span className="badge ">View Hospitals</span>
         </h1>
         <Table
           title=""
@@ -86,8 +74,8 @@ export default class AllHospitalPage extends Component {
             Search: () => <Search></Search>,
             LastPage: () => <div />,
             FirstPage: () => <div />,
-            PreviousPage: () => <Button>Prev</Button>,
-            NextPage: () => <Button>Next</Button>,
+            PreviousPage: () => <ChevronLeftTwoTone />,
+            NextPage: () => <ChevronRightTwoTone />,
             ResetSearch: () => <Cancel></Cancel>,
             SortArrow: () => <FilterList></FilterList>,
             DetailPanel: () => <div />,

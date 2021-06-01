@@ -8,6 +8,12 @@ import MaterialTable from "material-table";
 import FilterNoneIcon from "@material-ui/icons/FilterNone";
 import { Clear, Search, Cancel, Edit, FilterList } from "@material-ui/icons";
 import patient from "../images/patient.jpg";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+} from "react-bootstrap-icons";
 
 function AllAdminPage({ history, hospitalsData, fetchHospitals }) {
   const [muiTableKey, setMuiTableKey] = React.useState(0);
@@ -15,7 +21,7 @@ function AllAdminPage({ history, hospitalsData, fetchHospitals }) {
   const columns = [
     { field: "adminFirstName", title: "First Name" },
     { field: "adminLastName", title: "Last Name" },
-    // { field: 'adminUserName', title: 'UserName' },
+    { field: "adminEmailId", title: "Email Id" },
     // { field: 'adminPassword', title: 'Password' },
   ];
 
@@ -35,51 +41,42 @@ function AllAdminPage({ history, hospitalsData, fetchHospitals }) {
     // fetchHospitals();
   }, []);
   return (
-    //   <h2>Loading</h2>
-    // ) : hospitalsData.error ? (
-    //   <h2>{hospitalsData.error}</h2>
-    // ) : (
-
-    <form
-      style={{
-        backgroundImage: patient,
-      }}
-    >
-      <div className="py-2">
+    <>
+      <div className="col-md-12 mt-4">
         <Link to="/addAdmin" style={{ float: "right" }}>
           <Button>Add Admin</Button>
         </Link>
         <h1>
-          <span className="badge badge-dark">View Admins</span>
+          <span className="badge ">View Admins</span>
         </h1>
       </div>
-      <div className="container">
-        <MaterialTable
-          elevation={5}
-          icons={{
-            Filter: () => <div />,
-            Search: () => <Search></Search>,
-            LastPage: () => <div />,
-            FirstPage: () => <div />,
-            PreviousPage: () => <Button>Prev</Button>,
-            NextPage: () => <Button>Next</Button>,
-            ResetSearch: () => <Cancel></Cancel>,
-            SortArrow: () => <FilterList></FilterList>,
-            DetailPanel: () => <div />,
-            Edit: () => <Edit></Edit>,
-          }}
-          title="Customer Data"
-          data={data}
-          columns={columns}
-          options={{
-            search: true,
-            paging: true,
-            filtering: false,
-            sorting: true,
-          }}
-        />
-      </div>
-    </form>
+
+      <MaterialTable
+        elevation={5}
+        icons={{
+          Filter: () => <div />,
+          Search: () => <Search></Search>,
+          LastPage: () => <div />,
+          FirstPage: () => <div />,
+          PreviousPage: () => <ChevronLeft />,
+          NextPage: () => <ChevronRight />,
+          ResetSearch: () => <Cancel></Cancel>,
+          SortArrow: () => <FilterList></FilterList>,
+          DetailPanel: () => <div />,
+          Edit: () => <Edit></Edit>,
+        }}
+        title="Customer Data"
+        data={data}
+        columns={columns}
+        options={{
+          search: true,
+          paging: true,
+          filtering: false,
+          sorting: true,
+          addRowPosition: true,
+        }}
+      />
+    </>
   );
 }
 export default AllAdminPage;
