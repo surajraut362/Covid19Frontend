@@ -1,23 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { IconButton, InputAdornment, TextField } from "@material-ui/core";
-import { Button, Grid, Paper } from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import LockIcon from "@material-ui/icons/Lock";
-import PhoneIcon from "@material-ui/icons/Phone";
-import FiberPinIcon from "@material-ui/icons/FiberPin";
-import RoomIcon from "@material-ui/icons/Room";
-import LocationCityIcon from "@material-ui/icons/LocationCity";
-import HomeIcon from "@material-ui/icons/Home";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
 import { Hospital } from "../../model/Hospital";
 import { AdminService } from "../../service/adminservice/AdminService";
 import { HospitalZone } from "../../model/HospitalZone";
 import { HospitalType } from "../../model/HospitalType";
 import { Admin } from "../../model/Admin";
-import Select from "react-select";
 
 class UpdateHospital extends Component {
   constructor(props) {
@@ -106,71 +93,108 @@ class UpdateHospital extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>
-          <span className="badge badge-dark">Add Hospital</span>
-        </h1>
+      // <form onSubmit={this.handleSubmit}>
+      //   <h1>
+      //     <span className="badge badge-dark">Add Hospital</span>
+      //   </h1>
+      <div className="container-fluid px-1 py-5 mx-auto">
+        <div className="row d-flex justify-content-center">
+          <div className="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div className="card">
+              <h5 className="text-center mb-4">Update Hospital</h5>
+              <form className="form-card" onSubmit={this.handleSubmit}>
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-12 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter Hospital Name<span className="text-danger"> *</span>
+                    </label>
 
-        <div className="form-group">
-          <div className="alert-danger">{this.state.error.NameError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="hospitalName"
-            placeholder="Enter hospital Name"
-            value={this.state.hospital.hospitalName}
-            onChange={(event) =>
-              this.setState({
-                hospital: {
-                  ...this.state.hospital,
-                  hospitalName: event.target.value,
-                },
-              })
-            }
-          />
-        </div>
+                    <div className="alert-danger">
+                      {this.state.error.NameError}
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="hospitalName"
+                      placeholder="Enter hospital Name"
+                      value={this.state.hospital.hospitalName}
+                      onChange={(event) =>
+                        this.setState({
+                          hospital: {
+                            ...this.state.hospital,
+                            hospitalName: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter General Bed<span className="text-danger"> *</span>
+                    </label>
+                    <div className="alert-danger">
+                      {this.state.error.GenerelBed}
+                    </div>
 
-        <div className="form-group">
-          <div className="alert-danger">{this.state.error.GeneralBedError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="hospitalGeneralBed"
-            placeholder="Enter hospital General Bed"
-            value={this.state.hospital.hospitalGeneralBed}
-            onChange={(event) =>
-              this.setState({
-                hospital: {
-                  ...this.state.hospital,
-                  hospitalGeneralBed: event.target.value,
-                },
-              })
-            }
-          />
+                    <div className="alert-danger">
+                      {this.state.error.GeneralBedError}
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="hospitalGeneralBed"
+                      placeholder="Enter hospital General Bed"
+                      value={this.state.hospital.hospitalGeneralBed}
+                      onChange={(event) =>
+                        this.setState({
+                          hospital: {
+                            ...this.state.hospital,
+                            hospitalGeneralBed: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter ICU Bed<span className="text-danger"> *</span>
+                    </label>
+                    <div className="alert-danger">
+                      {this.state.error.ICUBed}
+                    </div>
+
+                    <div className="alert-danger">
+                      {this.state.error.ICUBedError}
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="hospitalICUBed"
+                      placeholder="Enter hospital ICU Bed"
+                      value={this.state.hospital.hospitalICUBed}
+                      onChange={(event) =>
+                        this.setState({
+                          hospital: {
+                            ...this.state.hospital,
+                            hospitalICUBed: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                    <br></br>
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-info">
+                  Update Hospital
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="form-group">
-          <div className="alert-danger">{this.state.error.ICUBedError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="hospitalICUBed"
-            placeholder="Enter hospital ICU Bed"
-            value={this.state.hospital.hospitalICUBed}
-            onChange={(event) =>
-              this.setState({
-                hospital: {
-                  ...this.state.hospital,
-                  hospitalICUBed: event.target.value,
-                },
-              })
-            }
-          />
-          <br></br>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Update Hospital
-        </button>
-      </form>
+      </div>
     );
   }
 }

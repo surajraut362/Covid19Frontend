@@ -1,12 +1,6 @@
-import { ThreeSixty } from "@material-ui/icons";
-import React, { Component, component } from "react";
+import React, { Component } from "react";
 import { Admin } from "../../model/Admin";
-import { Hospital } from "../../model/Hospital";
-import { HospitalType } from "../../model/HospitalType";
-import { HospitalZone } from "../../model/HospitalZone";
 import { AdminService } from "../../service/adminservice/AdminService";
-import axios from "axios";
-import Select from "react-select";
 import "../../styles/design.css";
 
 class AddAdmin extends Component {
@@ -25,25 +19,11 @@ class AddAdmin extends Component {
   validate = () => {
     let flag = true;
     let error = {};
-    // if (!this.state.hospital.hospitalId) {
-    //   error.idError = "hospital Id Is Required";
-    //   flag = false
-    // }
 
     if (!this.state.admin.adminFirstName) {
       flag = false;
       error.NameError = "First Name is Required";
     }
-
-    // if (!this.state.hospital.hospitalZone) {
-    //   flag = false;
-    //   error.numberError = "Hospital Zone is Requ.ired";
-    // }
-
-    // if (!this.state.hospital.hospitalType) {
-    //   flag = false;
-    //   error.ageError = "Hospital Type is Required";
-    // }
 
     if (!this.state.admin.adminLastName) {
       flag = false;
@@ -69,7 +49,7 @@ class AddAdmin extends Component {
     this.service
       .addAdmin(this.state.admin)
       .then((data) => {
-        this.props.history.push("/admins");
+        this.props.history.push("/admin");
       })
       .catch((error) => {
         alert(JSON.stringify(error));
@@ -97,6 +77,7 @@ class AddAdmin extends Component {
                       type="text"
                       className="form-control"
                       id="firstName"
+                      data-testid="FirstName"
                       placeholder="Enter Admin First Name"
                       value={this.state.admin.adminFirstName}
                       onChange={(event) =>
@@ -121,6 +102,7 @@ class AddAdmin extends Component {
                       type="text"
                       className="form-control"
                       id="lastName"
+                      data-testid="LastName"
                       placeholder="Enter Admin Last Name"
                       value={this.state.admin.adminLastName}
                       onChange={(event) =>
@@ -148,6 +130,7 @@ class AddAdmin extends Component {
                         type="text"
                         className="form-control"
                         id="username"
+                        data-testid="Id"
                         placeholder="Enter Email Id"
                         value={this.state.admin.adminEmailId}
                         onChange={(event) =>

@@ -1,4 +1,4 @@
-import { HospitalService } from "../service/hospitalservice/HospitalService";
+import { AdminService } from "../service/adminservice/AdminService";
 import {
   FETCH_HOSPITALS_REQUEST,
   FETCH_HOSPITALS_SUCCESS,
@@ -9,14 +9,16 @@ export const fetchHospitals = () => {
   // alert("fetching data from database.");
   return (dispatch) => {
     dispatch(fetchHospitalsRequest());
-    let service = new HospitalService();
-    service.getAllHospitals().then((response) => {
-      const hospitals = response.data;
-      dispatch(fetchHospitalsSuccess(hospitals));
-    })
+    let service = new AdminService();
+    service
+      .getAdminCredentials(JSON.parse(sessionStorage.getItem("username")))
+      .then((response) => {
+        const hospitals = response.data.hospitals;
+
+        dispatch(fetchHospitalsSuccess(hospitals));
+      })
       .catch((error) => {
         dispatch(fetchHospitalsFailure(error.message));
-      
       });
   };
 };

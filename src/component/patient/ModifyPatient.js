@@ -5,6 +5,10 @@ import Select from "react-select";
 import axios from "axios";
 import "../hompepage/style.css";
 
+{
+  /*class Component for updating Patient Details*/
+}
+
 class ModifyPatient extends Component {
   service = new PatientService();
 
@@ -29,6 +33,9 @@ class ModifyPatient extends Component {
     };
   }
 
+  //this is function is for getting data from API ,After getting the response
+  //   it will loop through data array using map function and will set state
+  //   using selectOptions value.
   async getOptions() {
     const data = await (
       await axios.get(
@@ -45,6 +52,7 @@ class ModifyPatient extends Component {
     this.setState({ selectOptions: options });
   }
 
+  // handles the change of the input value .
   handleChange(e) {
     if (JSON.stringify(this.state.patients) !== []) {
       // alert(JSON.stringify(this.state.patients))
@@ -57,37 +65,18 @@ class ModifyPatient extends Component {
   }
 
   componentDidMount() {
+    // if (sessionStorage.getItem("username") === null) {
+    //   alert('Unauthorized Access');
+    //   this.props.history.push("/");
+    // }
     this.getOptions();
   }
 
-  // componentDidMount() {
-  //   if (sessionStorage.getItem("username") === null) {
-  //     alert('Unauthorized Access');
-  //     this.props.history.push("/");
-  //   }
-  //   this.service.getAllDepartment()
-  //     .then((result) => {
-  //       let depts = result.data.map((dept) => {
-  //         return { value: dept.departmentId, display: dept.departmentName };
-  //       });
-  //       this.setState({
-  //         departments: [{ value: "-1", display: "Select Department" }].concat(
-  //           depts
-  //         ),
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       alert(JSON.stringify("error: " + error));
-  //     });
-  // }
-
+  // this function will check if input fields are null or not.
   validate = () => {
     let flag = true;
     let error = {};
-    // if (!this.state.patient.patientId) {
-    //   error.idError = "Patient Id Is Required";
-    //   flag = false
-    // }
+
     if (!this.state.patient.patientFirstName) {
       flag = false;
       error.fnameError = "Patient First Name Is Required";
@@ -115,6 +104,7 @@ class ModifyPatient extends Component {
     return flag;
   };
 
+  // will check the validate function and then handle the form submission on submit button.
   handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -127,154 +117,190 @@ class ModifyPatient extends Component {
       .modifyPatient(this.state.patient)
       .then((res) => {
         alert("patient updated...");
-        this.props.history.push("/patients");
+        this.props.history.push("/patient");
       })
-      .catch(() => {
-        alert("Something went wrong");
-      });
+      .catch(() => {});
     // redirect you to Home component after adding user
     // this.props.history.push("/students");
   };
 
+  //render is used to render the React JSX content into DOM.
   render() {
     return (
-      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
-        <div className="row">
-          <div className="col-2"></div>
-          <div
-            className="col-lg-8 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "#8b9dc3" }}
-          >
-            <form onSubmit={this.handleSubmit}>
-              <h3 align="center" className="mt-2">
-                <span className="badge badge-dark">Update Patient Details</span>
-              </h3>
-              <div className="form-group mr2">
-                <label>Select Patient:</label>
-                <div className="alert-danger">{this.state.error.idError}</div>
-                <Select
-                  // type="text"
-                  // className="form-control"
-                  // id="patientId"
-                  // placeholder="Enter Patient Id"
-                  // value={this.state.patient.patientId}
-                  options={this.state.selectOptions}
-                  onChange={this.handleChange.bind(this)}
+      <div className="container-fluid px-1 py-3 mx-auto">
+        <div className="row d-flex justify-content-center">
+          <div className="col-xl-7 col-lg-8 col-md-9 col-12">
+            <div className="card">
+              <form onSubmit={this.handleSubmit}>
+                <h3 align="center" className="mt-2">
+                  <span className="badge badge-dark">
+                    Update Patient Details
+                  </span>
+                </h3>
+                <div className="form-group mr2">
+                  <label className="form-control-label">
+                    Select Patient:<span className="text-danger"> *</span>
+                  </label>
+                  <div className="alert-danger">{this.state.error.idError}</div>
+                  <Select
+                    // type="text"
+                    //data-testid="PatientIdForTesting"
+                    // className="form-control"
+                    // id="patientId"
+                    // placeholder="Enter Patient Id"
+                    // value={this.state.patient.patientId}
+                    options={this.state.selectOptions}
+                    onChange={this.handleChange.bind(this)}
 
-                  // onChange={(event) =>
-                  //   this.setState({ patient: { ...this.state.patient, patientId: event.target.value } })
-                  // }
-                />
-              </div>
-              <div className="form-group">
-                <label>Firstname:</label>
-                <div className="alert-danger">{this.state.error.nameError}</div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="patientFirstName"
-                  placeholder="Enter patient FirstName"
-                  value={this.state.patient.patientFirstName}
-                  onChange={(event) =>
-                    this.setState({
-                      patient: {
-                        ...this.state.patient,
-                        patientFirstName: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label>Lastname:</label>
-                <div className="alert-danger">
-                  {this.state.error.scoreError}
+                    // onChange={(event) =>
+                    //   this.setState({ patient: { ...this.state.patient, patientId: event.target.value } })
+                    // }
+                  />
                 </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="patientLastName"
-                  placeholder="Enter patient LastName"
-                  value={this.state.patient.patientLastName}
-                  onChange={(event) =>
-                    this.setState({
-                      patient: {
-                        ...this.state.patient,
-                        patientLastName: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label>Mobile Number:</label>
-                <div className="alert-danger">
-                  {this.state.error.scoreError}
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Firstname:<span className="text-danger"> *</span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.fnameError}
+                      </div>
+                      <input
+                        type="text"
+                        data-testid="FirstName"
+                        className="form-control"
+                        id="patientFirstName"
+                        placeholder="Enter patient FirstName"
+                        value={this.state.patient.patientFirstName}
+                        onChange={(event) =>
+                          this.setState({
+                            patient: {
+                              ...this.state.patient,
+                              patientFirstName: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Lastname:<span className="text-danger"> *</span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.lnameError}
+                      </div>
+                      <input
+                        type="text"
+                        data-testid="LastName"
+                        className="form-control"
+                        id="patientLastName"
+                        placeholder="Enter patient LastName"
+                        value={this.state.patient.patientLastName}
+                        onChange={(event) =>
+                          this.setState({
+                            patient: {
+                              ...this.state.patient,
+                              patientLastName: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="patientMobileNo"
-                  placeholder="Enter patient Mobile Number"
-                  value={this.state.patient.patientMobileNo}
-                  onChange={(event) =>
-                    this.setState({
-                      patient: {
-                        ...this.state.patient,
-                        patientMobileNo: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label>Age:</label>
-                <div className="alert-danger">
-                  {this.state.error.scoreError}
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Age:<span className="text-danger"> *</span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.ageError}
+                      </div>
+                      <input
+                        type="Number"
+                        min=""
+                        max="150"
+                        data-testid="Age"
+                        className="form-control"
+                        id="patientAge"
+                        placeholder="Enter patient Age"
+                        value={this.state.patient.patientAge}
+                        onChange={(event) =>
+                          this.setState({
+                            patient: {
+                              ...this.state.patient,
+                              patientAge: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Select Gender:<span className="text-danger"> *</span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.genError}
+                      </div>
+                      <select
+                        type="text"
+                        data-testid="Gender"
+                        className="form-control"
+                        id="patientGender"
+                        value={this.state.patient.patientGender}
+                        onChange={(event) =>
+                          this.setState({
+                            patient: {
+                              ...this.state.patient,
+                              patientGender: event.target.value,
+                            },
+                          })
+                        }
+                      >
+                        <option>.....</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="patientAge"
-                  placeholder="Enter patient Age"
-                  value={this.state.patient.patientAge}
-                  onChange={(event) =>
-                    this.setState({
-                      patient: {
-                        ...this.state.patient,
-                        patientAge: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label>Select Gender:</label>
-                <div className="alert-danger">
-                  {this.state.error.scoreError}
+                <div className="form-group">
+                  <label className="form-control-label">
+                    Mobile Number:<span className="text-danger"> *</span>
+                  </label>
+                  <div className="alert-danger">
+                    {this.state.error.numberError}
+                  </div>
+                  <input
+                    type="Number"
+                    min="1111111111"
+                    max="9999999999"
+                    data-testid="MobileNumber"
+                    className="form-control"
+                    id="patientMobileNo"
+                    placeholder="Enter Mobile Number"
+                    value={this.state.patient.patientMobileNo}
+                    onChange={(event) =>
+                      this.setState({
+                        patient: {
+                          ...this.state.patient,
+                          patientMobileNo: event.target.value,
+                        },
+                      })
+                    }
+                  />
                 </div>
-                <select
-                  type="text"
-                  className="form-control"
-                  id="patientGender"
-                  value={this.state.patient.patientGender}
-                  onChange={(event) =>
-                    this.setState({
-                      patient: {
-                        ...this.state.patient,
-                        patientGender: event.target.value,
-                      },
-                    })
-                  }
-                >
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
-              </div>
-              <button type="submit" className="btn btn-warning my-2">
-                Update Patient
-              </button>
-            </form>
+                <button type="submit" className="btn btn-info my-2">
+                  Update Patient
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

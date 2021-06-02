@@ -11,19 +11,20 @@ import {
 export function Footer() {
   return (
     <footer
-      className="navbar p-0 mb-0 "
+      className="navbar p-0 mb-0 mt-4"
       style={{
         textAlign: "center",
         backgroundColor: "#ededed",
         alignSelf: "baseline",
       }}
     >
-      <h6 className="mt-2 ml-2 col-xs-12">
+      <h6 className="mt-2 ml-2 col-xs-12" align="center">
         {" Copyright@2021 Covid19Tracker. All rights reserved"}
       </h6>
 
-      <div className="mt-2 mr-2 mb-0 " align="center">
+      <div className="mt-1 mr-2 mb-0 col-xs-12 ml-4" align="center">
         <a
+          align="center"
           href="https://github.com/covid19india/covid19india-react"
           className="github"
           target="_blank"
@@ -49,8 +50,7 @@ export function Footer() {
         >
           <Mail className="text-primary" />
         </a>
-        <br />
-        <p className="copyright" align="center">
+        <p className="copyright col-xs-12" align="center">
           We stand with everyone fighting on the frontlines
         </p>
       </div>

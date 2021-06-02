@@ -1,23 +1,12 @@
 import React from "react";
-import ResponsiveEmbed from "react-bootstrap/ResponsiveEmbed";
-import {
-  Navbar,
-  Image,
-  Nav,
-  Container,
-  NavDropdown,
-  Card,
-  Button,
-  NavLink,
-} from "react-bootstrap";
-import datacenter from "../images/datacenterroom.jpg";
+import { Button, Card, Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import admin from "../images/admincategory.png";
+import datacenter from "../images/datacenterroom.jpg";
 import hospital from "../images/hospital.jpg";
 import patient from "../images/patient.jpg";
 
-import { Link } from "react-router-dom";
-
-export default function adminHomepage() {
+export default function AdminHomepage() {
   return (
     <div>
       <div className="container">
@@ -39,7 +28,7 @@ export default function adminHomepage() {
               <Card.Body>
                 <Card.Title>Admin Functionalities</Card.Title>
 
-                <Link to="/admins">
+                <Link to="/admin">
                   <Button variant="primary">Explore</Button>
                 </Link>
               </Card.Body>
@@ -52,7 +41,7 @@ export default function adminHomepage() {
               <Card.Body>
                 <Card.Title>Hospital Functionalities</Card.Title>
 
-                <Link to="/hospitals">
+                <Link to="/hospital">
                   <Button variant="primary">Explore</Button>
                 </Link>
               </Card.Body>
@@ -65,7 +54,7 @@ export default function adminHomepage() {
               <Card.Body>
                 <Card.Title>Patient Functionalities</Card.Title>
                 <Card.Text></Card.Text>
-                <Link to="/patients">
+                <Link to="/patient">
                   <Button variant="primary">Explore</Button>
                 </Link>
               </Card.Body>

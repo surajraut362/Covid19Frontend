@@ -1,40 +1,29 @@
 import React, { Component } from "react";
-import { Carousel, Container, Image } from "react-bootstrap";
+import { Carousel, Image } from "react-bootstrap";
+// import '../hompepage/style.css';
 // import * as Icon from 'react-bootstrap-icons';
-import {
-  Navbar,
-  Nav,
-  NavLink,
-  Button,
-  Card,
-  Jumbotron,
-  Tab,
-  Tabs,
-} from "react-bootstrap";
-import * as Icon from "react-bootstrap-icons";
+import { Button, Jumbotron, Tab, Tabs } from "react-bootstrap";
 import img2 from "../images/covid2.jpg";
 import img3 from "../images/covid3.png";
-import heroes from "../images/heroes.png";
 import vaccine from "../images/togetherwefight1.png";
-import HeaderSideMenuFooter from "./HeaderSideMenu";
-import { Footer } from "./Footer";
-import IconUI from "@material-ui/core/Icon";
-import { colors } from "@material-ui/core";
-import Mycards from "./cards";
-import Mycards2 from "./cards2";
-import Mycards3 from "./cards3";
+import Mycards from "./Card1";
+import Mycards2 from "./Card2";
+import Mycards3 from "./Card3";
 import Charts from "./Charts";
 
 export default class HomePage extends Component {
   render() {
     return (
       <div>
-        <div className="my-4">
+        <div data-testid="homepage" className="my-4">
           {/* Body container */}
           <div>
             <div className="container">
               <div className="row">
-                <div className="col-lg-6 col-md-6 col-xs-12">
+                <div
+                  className="col-lg-6 col-md-6 col-xs-12"
+                  style={{ backgroundColor: "#EBEDEF" }}
+                >
                   <Carousel fade>
                     <Carousel.Item>
                       <img
@@ -46,7 +35,6 @@ export default class HomePage extends Component {
                       <Carousel.Caption></Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
-                      {/* <a href="https://studentzone-ngasce.nmims.edu/studentportal/"  target="_blank"> */}
                       <img
                         className="d-block w-100"
                         src={img3}
@@ -59,7 +47,10 @@ export default class HomePage extends Component {
                   </Carousel>
                 </div>
 
-                <div className="col-lg-6 col-md-6 col-xs-12 ml=auto">
+                <div
+                  className="col-lg-6 col-md-6 col-xs-12 ml=auto"
+                  style={{ backgroundColor: "#EBEDEF" }}
+                >
                   <Image src={vaccine} fluid />
                 </div>
               </div>
@@ -68,13 +59,17 @@ export default class HomePage extends Component {
         </div>
         <div className="container">
           <div className="row">
-            <Charts />
+            <Charts style={{ backgroundColor: "#EBEDEF" }} />
           </div>
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-lg-8 col-md-8 col-xs-12" align="center">
-              <h5 id="articleheadin" className="mb-4">
+            <div
+              className="col-lg-8 col-md-8 col-xs-12"
+              align="center"
+              style={{ backgroundColor: "#EBEDEF" }}
+            >
+              <h5 id="articleheadin" className="my-4">
                 Articles related to our <b>Life Savers</b>
               </h5>
               <Jumbotron style={{ backgroundColor: "lightblue" }}>
@@ -117,68 +112,33 @@ export default class HomePage extends Component {
               </Jumbotron>
             </div>
 
-            <div className="col-lg-4 col-md-4 col-xs-12 " align="center">
-              <h5 id="articleheading" className="mb-4" align="center">
+            <div
+              className="col-lg-4 col-md-4 col-xs-12 "
+              align="center"
+              style={{ backgroundColor: "#EBEDEF" }}
+            >
+              <h5 id="articleheading" className="my-4" align="center">
                 Important help <b>Web Links</b>
               </h5>
               <Tabs
                 defaultActiveKey="profile"
                 id="uncontrolled-tab-example"
-                className="ml-2 mb-auto"
+                className="ml-2"
+                align="center"
               >
-                <Tab eventKey="home" title="Saving">
+                <Tab className="" eventKey="home" title="Savers">
                   <Mycards3 />
                 </Tab>
-                <Tab eventKey="profile" title="Helping Hands" align="center">
+                <Tab eventKey="profile" title="Helping-Hand" align="">
                   <Mycards />
                 </Tab>
-                <Tab eventKey="contact" title="Vaccine" align="center">
+                <Tab eventKey="contact" title="Vaccine" align="">
                   <Mycards2 />
                 </Tab>
               </Tabs>
             </div>
           </div>
         </div>
-
-        {/* <div className="container my-4">
-          <div className="row my-4">
-          <Card className="mr-4"  style={{ width: '18rem' }} >
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-    </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-          </Card>
-
-          <Card className="mr-4" style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-    </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-          </Card>
-
-          <Card className="mr-4" style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-    </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-          </Card>
-          </div>
-        </div> */}
       </div>
     );
   }

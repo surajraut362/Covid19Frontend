@@ -11,7 +11,7 @@ class DeleteHospital extends Component {
     // alert("hello");
     service.removeHospital(this.props.match.params.id).then(
       (result) => {
-        this.props.history.push("/hospitals");
+        this.props.history.push("/hospital");
       },
       (error) => {
         alert("Hospital is not deleted.");

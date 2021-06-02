@@ -5,6 +5,9 @@ import { PatientService } from "../../service/patientservice/PatientService";
 import Select from "react-select";
 import axios from "axios";
 
+{
+  /*class Component for Updating Patient Details*/
+}
 class ModifyPatientStatus extends Component {
   service = new PatientService();
 
@@ -16,7 +19,6 @@ class ModifyPatientStatus extends Component {
       patientFirstName: "",
       patientLastName: "",
 
-      patient: new Patient(),
       status: new Status(),
       patients: [],
 
@@ -30,6 +32,9 @@ class ModifyPatientStatus extends Component {
     };
   }
 
+  //   this is function is for getting data from API ,After getting the response
+  //   it will loop through data array using map function and will set state
+  //   using selectOptions value.
   async getOptions() {
     const data = await (
       await axios.get(
@@ -45,6 +50,8 @@ class ModifyPatientStatus extends Component {
 
     this.setState({ selectOptions: options });
   }
+
+  // handles the change of the input value .
   handleChange(e) {
     if (JSON.stringify(this.state.patients) !== []) {
       // alert(JSON.stringify(this.state.patients))
@@ -114,40 +121,18 @@ class ModifyPatientStatus extends Component {
     }
   }
   componentDidMount() {
+    // if (sessionStorage.getItem("username") === null) {
+    //        alert('Unauthorized Access');
+    //        this.props.history.push("/");
+    //      }
     this.getOptions();
   }
-  // componentDidMount() {
-  //   if (sessionStorage.getItem("username") === null) {
-  //     alert('Unauthorized Access');
-  //     this.props.history.push("/");
-  //   }
-  //   this.service.getAllDepartment()
-  //     .then((result) => {
-  //       let depts = result.data.map((dept) => {
-  //         return { value: dept.departmentId, display: dept.departmentName };
-  //       });
-  //       this.setState({
-  //         departments: [{ value: "-1", display: "Select Department" }].concat(
-  //           depts
-  //         ),
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       alert(JSON.stringify("error: " + error));
-  //     });
-  // }
 
+  // this function will check if input fields are null or not.
   validate = () => {
     let flag = true;
     let error = {};
-    // if (!this.state.patient.patientId) {
-    //   error.idError = "Patient Id Is Required";
-    //   flag = false
-    // }
-    // if (!this.state.status.statusId) {
-    //   flag = false;
-    //   error.idError = "Status id is Required";
-    // }
+
     if (!this.state.status.confirmDate) {
       flag = false;
       error.cdateError = "Patient test result is Required";
@@ -161,6 +146,7 @@ class ModifyPatientStatus extends Component {
     return flag;
   };
 
+  // will check the validate function and then handle the form submission on submit button.
   handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -173,8 +159,9 @@ class ModifyPatientStatus extends Component {
     this.service
       .modifyPatientStatus(this.state.status)
       .then((data) => {
+        // alert(JSON.stringify(data));
         // redirect you to Home component after adding user
-        // this.props.history.push("/patients");
+        this.props.history.push("/patient");
       })
       .catch((error) => {
         alert(JSON.stringify(error));
@@ -184,125 +171,155 @@ class ModifyPatientStatus extends Component {
       });
   };
 
+  //render is used to render the React JSX content into DOM.
   render() {
     return (
-      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
-        <div className="row">
-          <div className="col-2"></div>
-          <div
-            className="col-lg-8 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "#8b9dc3" }}
-          >
-            <form onSubmit={this.handleSubmit}>
-              <h1 align="center" className="mt-2">
-                <span className="badge badge-dark">Modify Patient Status</span>
-              </h1>
-              <div className="form-group mr2">
-                <label> Select Patient:</label>
-                <div className="alert-danger">{this.state.error.idError}</div>
-                <Select
-                  // type="text"
-                  // className="form-control"
-                  // id="patientId"
-                  // placeholder="Enter patient Id"
-                  // value={this.state.patient.patientId}
-                  options={this.state.selectOptions}
-                  onChange={this.handleChange.bind(this)}
-                  // onChange={(event) =>
-                  //   this.setState({ patient: { ...this.state.patient, patientId: event.target.value } })
-                  // }
-                />
-              </div>
-              <div className="form-group">
-                <label>Select Confirm Date:</label>
-                <div className="alert-danger">
-                  {this.state.error.cdateError}
+      <div className="container-fluid px-1 py-3 mx-auto">
+        <div className="row d-flex justify-content-center">
+          <div className="col-xl-7 col-lg-8 col-md-9 col-12">
+            <div className="card">
+              <form onSubmit={this.handleSubmit}>
+                <h3 align="center" className="mt-2">
+                  <span className="badge badge-dark">
+                    Update Patient Status
+                  </span>
+                </h3>
+                <div className="form-group mr2">
+                  <label className="form-control-label">
+                    Select Patient:<span className="text-danger"> *</span>
+                  </label>
+                  <div className="alert-danger">{this.state.error.idError}</div>
+                  <Select
+                    // type="text"
+                    // className="form-control"
+                    //data-testid="PatientIdForTesting"
+                    // id="patientId"
+                    // placeholder="Enter patient Id"
+                    // value={this.state.patient.patientId}
+                    options={this.state.selectOptions}
+                    onChange={this.handleChange.bind(this)}
+                    // onChange={(event) =>
+                    //   this.setState({ patient: { ...this.state.patient, patientId: event.target.value } })
+                    // }
+                  />
                 </div>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="confirmDate"
-                  placeholder="Enter confirm status date"
-                  value={this.state.status.confirmDate}
-                  onChange={(event) =>
-                    this.setState({
-                      status: {
-                        ...this.state.status,
-                        confirmDate: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Select Isolation Date:</label>
-                <div className="alert-danger">
-                  {this.state.error.idateError}
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Select Confirm Date:
+                        <span className="text-danger"> *</span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.cdateError}
+                      </div>
+                      <input
+                        type="date"
+                        data-testid="patientconfirmDate"
+                        className="form-control"
+                        id="confirmDate"
+                        placeholder="Enter confirm status date"
+                        value={this.state.status.confirmDate}
+                        onChange={(event) =>
+                          this.setState({
+                            status: {
+                              ...this.state.status,
+                              confirmDate: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Select Isolation Date:
+                        <span className="text-danger"> *</span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.idateError}
+                      </div>
+                      <input
+                        type="date"
+                        data-testid="patientisolationDate"
+                        className="form-control"
+                        id="isolationDate"
+                        placeholder="Enter patient isolation date "
+                        value={this.state.status.isolationDate}
+                        onChange={(event) =>
+                          this.setState({
+                            status: {
+                              ...this.state.status,
+                              isolationDate: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="isolationDate"
-                  placeholder="Enter patient isolation date "
-                  value={this.state.status.isolationDate}
-                  onChange={(event) =>
-                    this.setState({
-                      status: {
-                        ...this.state.status,
-                        isolationDate: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label>Select Recovery Date(Optional):</label>
-                <div className="alert-danger">
-                  {this.state.error.rdateError}
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Select Recovery Date(Optional):
+                        <span className="text-danger"></span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.rdateError}
+                      </div>
+                      <input
+                        type="date"
+                        data-testid="patientrecoveryDate"
+                        className="form-control"
+                        id="recoveredDate"
+                        placeholder="Enter patients Recovery Date"
+                        value={this.state.status.recoveredDate}
+                        onChange={(event) =>
+                          this.setState({
+                            status: {
+                              ...this.state.status,
+                              recoveredDate: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group col-sm-6 flex-column d-flex">
+                    <div className="form-group">
+                      <label className="form-control-label">
+                        Select Death Date(Optional):
+                        <span className="text-danger"></span>
+                      </label>
+                      <div className="alert-danger">
+                        {this.state.error.ddateError}
+                      </div>
+                      <input
+                        type="date"
+                        data-testid="patientdeathDate"
+                        className="form-control"
+                        id="deathDate"
+                        placeholder="Enter patients Death Date"
+                        value={this.state.status.deathDate}
+                        onChange={(event) =>
+                          this.setState({
+                            status: {
+                              ...this.state.status,
+                              deathDate: event.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="recoveredDate"
-                  placeholder="Enter patients Recovery Date"
-                  value={this.state.status.recoveredDate}
-                  onChange={(event) =>
-                    this.setState({
-                      status: {
-                        ...this.state.status,
-                        recoveredDate: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Select Death Date(Optional):</label>
-                <div className="alert-danger">
-                  {this.state.error.ddateError}
-                </div>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="deathDate"
-                  placeholder="Enter patients Death Date"
-                  value={this.state.status.deathDate}
-                  onChange={(event) =>
-                    this.setState({
-                      status: {
-                        ...this.state.status,
-                        deathDate: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-              <button type="submit" className="btn btn-warning my-2">
-                Modify Status
-              </button>
-            </form>
+                <button type="submit" className="btn btn-info my-2">
+                  Modify Status
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

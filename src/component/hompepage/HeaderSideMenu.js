@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import * as Icon from "react-bootstrap-icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -16,18 +14,13 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Link, Route } from "react-router-dom";
 import LogoutComponent from "../pages/LogoutComponent";
 import { AccountCircle } from "@material-ui/icons";
-import { Footer } from "./Footer";
-import Routes from "../../Routes";
-import header from "../images/header.png";
-import { Box, Grid } from "@material-ui/core";
-const drawerWidth = 150;
+import header from "../images/mylogo.png";
+import { Box } from "@material-ui/core";
+const drawerWidth = 170;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  link: {
+  Button: {
     textDecoration: "none",
   },
 }));
@@ -154,7 +147,7 @@ function HeaderSideMenu(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="headersidemenu">
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -173,12 +166,11 @@ function HeaderSideMenu(props) {
             <MenuIcon />
           </IconButton>
           <Box>
-            <Link to="/">
+            <ListItem button onClick={() => props.history.push("/")}>
               <h6 className={classes.appHeader}>
-                <img src={header} style={{ width: 40 }} />
-                Covid19Tracker
+                <img src={header} style={{ width: 180, padding: 0 }} />
               </h6>
-            </Link>
+            </ListItem>
           </Box>
           <Typography
             className={clsx(classes.userName, {
@@ -186,21 +178,25 @@ function HeaderSideMenu(props) {
             })}
           >
             {userName ? (
-              <Button
+              <ListItem
+                button
                 aria-controls="profile-menu"
                 aria-haspopup="false"
                 onClick={handleClick}
+                className="text-dark"
               >
                 <AccountCircle />
                 {userName["username"]}
-              </Button>
+              </ListItem>
             ) : (
-              <Link to="/login">
-                <Button>
-                  <ExitToAppIcon />
-                  Login
-                </Button>
-              </Link>
+              <ListItem
+                button
+                className="text-dark"
+                onClick={() => props.history.push("/login")}
+              >
+                <ExitToAppIcon />
+                Login
+              </ListItem>
             )}
 
             <Menu
@@ -211,21 +207,22 @@ function HeaderSideMenu(props) {
               onClose={handleClose}
             >
               <MenuItem>
-                <Button data-toggle="modal" data-target="#logoutModal">
+                <ListItem button data-toggle="modal" data-target="#logoutModal">
                   Logout
-                </Button>
+                </ListItem>
               </MenuItem>
               <MenuItem>
-                <Button>
-                  <Link to="/dashboard">
-                    <ListItemText secondary="Dashboard" />
-                  </Link>
-                </Button>
+                <ListItem
+                  button
+                  onClick={() => props.history.push("/dashboard")}
+                >
+                  Dashboard
+                </ListItem>
               </MenuItem>
             </Menu>
           </Typography>
           <div
-            class="modal fade "
+            className="modal fade "
             id="logoutModal"
             tabindex="-1"
             role="dialog"
@@ -244,7 +241,7 @@ function HeaderSideMenu(props) {
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.drawerHeader}>
-          <h5 className={classes.menuTitle}>Menu</h5>
+          <h6 className={classes.menuTitle}>Menu</h6>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -259,38 +256,40 @@ function HeaderSideMenu(props) {
 
           {userName != null ? (
             <>
-              <ListItem button>
-                <Link to="/dashboard" className={classes.link}>
-                  DashBoard
-                </Link>
+              <ListItem button onClick={() => props.history.push("/dashboard")}>
+                Dashboard
               </ListItem>
 
-              <ListItem button>
-                <Link to="/admins" className={classes.link}>
-                  Admin
-                </Link>
+              <ListItem button onClick={() => props.history.push("/admin")}>
+                Admin
               </ListItem>
-              <ListItem button>
-                <Link to="/patients" className={classes.link}>
-                  Patient
-                </Link>
+
+              <ListItem button onClick={() => props.history.push("/hospital")}>
+                Hospital
               </ListItem>
-              <ListItem button>
-                <Link to="/hospitals" className={classes.link}>
-                  Hospital
-                </Link>
+              <ListItem button onClick={() => props.history.push("/patient")}>
+                Patient
               </ListItem>
             </>
           ) : (
             <></>
           )}
+          <ListItem button onClick={() => props.history.push("/guidelines")}>
+            GuideLines
+          </ListItem>
 
-          <Link to="/guidelines" className={classes.link}>
-            <ListItem button>GuideLines</ListItem>
-          </Link>
-          <Link to="/contactus" className={classes.link}>
-            <ListItem button>Contact Us</ListItem>
-          </Link>
+          <ListItem button onClick={() => props.history.push("/contactus")}>
+            Contact Us
+          </ListItem>
+          {userName != null ? (
+            <ListItem button data-toggle="modal" data-target="#logoutModal">
+              Logout
+            </ListItem>
+          ) : (
+            <ListItem button onClick={() => props.history.push("/login")}>
+              Login
+            </ListItem>
+          )}
         </List>
       </Drawer>
       <main

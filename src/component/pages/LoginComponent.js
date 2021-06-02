@@ -67,105 +67,95 @@ export default class LoginComponent extends Component {
     {
     }
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div class="container-fluid   ">
-          <div class="card card-img-overlay">
-            <div class="row ">
-              <div class="col-lg-12 d-flex justify-content-center">
-                <div class="card2 card border-0  px-4 py-5">
-                  <div class="row px-3">
-                    {" "}
-                    <div className="alert-danger">
-                      {this.state.error.usernameError}
-                    </div>
-                    <label class="mb-1">
-                      <h6 class="mb-0 text-sm">Username</h6>
-                    </label>{" "}
-                    <input
-                      class="mb-4"
-                      type="text"
-                      name="email"
-                      placeholder="Enter a valid Username"
-                      value={this.state.login.username}
-                      onChange={(event) =>
-                        this.setState({
-                          login: {
-                            ...this.state.loginlogin,
-                            username: event.target.value,
-                          },
-                        })
-                      }
-                    />{" "}
-                  </div>
-                  <div class="row px-3">
-                    {" "}
-                    <label class="mb-1">
-                      <h6 class="mb-0 text-sm">Password</h6>
-                    </label>{" "}
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Enter password"
-                      value={this.state.login.password}
-                      onChange={(event) =>
-                        this.setState({
-                          login: {
-                            ...this.state.login,
-                            password: event.target.value,
-                          },
-                        })
-                      }
-                    />{" "}
-                  </div>
-                  <div class="row px-3 mb-4">
-                    <div class="custom-control custom-checkbox custom-control-inline">
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="container-fluid">
+            <div className="card ">
+              <div className="row ">
+                <div className="col-lg-12 d-flex justify-content-center">
+                  <div className="card2 card border-0  px-4 py-5">
+                    <div className="row px-3">
                       {" "}
-                      <input
-                        id="chk1"
-                        type="checkbox"
-                        name="chk"
-                        class="custom-control-input"
-                      />{" "}
-                      <label for="chk1" class="custom-control-label text-sm">
-                        Remember me
+                      <div className="alert-danger">
+                        {this.state.error.usernameError}
+                      </div>
+                      <label className="mb-1">
+                        <h6 className="mb-0 text-sm">Username</h6>
                       </label>{" "}
-                    </div>{" "}
-                    <a href="#" class="ml-auto mb-0 text-sm">
-                      Forgot Password?
-                    </a>
-                  </div>
-                  <div className="form-group">
-                    <div className="alert-danger">
-                      {this.state.error.invalidCredentials}
+                      <input
+                        className="mb-4"
+                        type="text"
+                        name="email"
+                        placeholder="Enter a valid Username"
+                        value={this.state.login.username}
+                        onChange={(event) =>
+                          this.setState({
+                            login: {
+                              ...this.state.loginlogin,
+                              username: event.target.value,
+                            },
+                          })
+                        }
+                      />{" "}
                     </div>
-                  </div>
-                  <div class="row mb-3 px-3">
-                    {" "}
-                    <button type="submit" class="btn btn-primary text-center">
-                      Login
-                    </button>{" "}
+                    <div className="row px-3">
+                      {" "}
+                      <label className="mb-1">
+                        <h6 className="mb-0 text-sm">Password</h6>
+                      </label>{" "}
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        value={this.state.login.password}
+                        onChange={(event) =>
+                          this.setState({
+                            login: {
+                              ...this.state.login,
+                              password: event.target.value,
+                            },
+                          })
+                        }
+                      />{" "}
+                    </div>
+                    <div className="row px-3 mb-4">
+                      <div className="custom-control custom-checkbox custom-control-inline">
+                        {" "}
+                        <input
+                          id="chk1"
+                          type="checkbox"
+                          name="chk"
+                          className="custom-control-input"
+                        />{" "}
+                        <label
+                          for="chk1"
+                          className="custom-control-label text-sm"
+                        >
+                          Remember me
+                        </label>{" "}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <div className="alert-danger">
+                        {this.state.error.invalidCredentials}
+                      </div>
+                    </div>
+                    <div className="row mb-3 px-3">
+                      {" "}
+                      <button
+                        type="submit"
+                        className="btn btn-primary text-center"
+                      >
+                        Login
+                      </button>{" "}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            {/* <div class="bg-primary py-4">
-              <div class="row px-3">
-                {" "}
-                <small class="ml-4 ml-sm-5 mb-2">
-                  Copyright &copy; 2021. All rights reserved.
-                </small>
-                <div class="social-contact ml-4 ml-sm-auto">
-                  {" "}
-                  <span class="fa fa-facebook mr-4 text-sm"></span>{" "}
-                  <span class="fa fa-google-plus mr-4 text-sm"></span>{" "}
-                  <span class="fa fa-linkedin mr-4 text-sm"></span>{" "}
-                  <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span>{" "}
-                </div>
-              </div>
-            </div> */}
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }

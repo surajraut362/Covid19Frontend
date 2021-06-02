@@ -9,14 +9,14 @@ function LogoutComponent(props) {
   }
 
   return (
-    <div class="modal-dialog text-secondary" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title " id="exampleModalLabel">
+    <div className="modal-dialog text-secondary" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title " id="exampleModalLabel">
             Ready to Leave?
           </h5>
           <button
-            class="close"
+            className="close"
             type="button"
             data-dismiss="modal"
             aria-label="Close"
@@ -24,14 +24,22 @@ function LogoutComponent(props) {
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body text-gray-400">
+        <div className="modal-body text-gray-400">
           Select "Logout" below if you are ready to end your current session.
         </div>
-        <div class="modal-footer text-gray-400">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+        <div className="modal-footer text-gray-400">
+          <button
+            className="btn btn-secondary"
+            type="button"
+            data-dismiss="modal"
+          >
             Cancel
           </button>
-          <button class="btn btn-primary" data-dismiss="modal" onClick={logout}>
+          <button
+            className="btn btn-primary"
+            data-dismiss="modal"
+            onClick={logout}
+          >
             Logout
           </button>
         </div>

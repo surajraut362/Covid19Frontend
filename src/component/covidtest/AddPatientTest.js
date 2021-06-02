@@ -6,6 +6,9 @@ import axios from "axios";
 import Select from "react-select";
 import "../hompepage/style.css";
 
+{
+  /*class Component for Adding Patient Test Details*/
+}
 class AddPatientTest extends Component {
   service = new PatientService();
 
@@ -27,6 +30,10 @@ class AddPatientTest extends Component {
       },
     };
   }
+
+  //   this is function is for getting data from API ,After getting the response
+  //   it will loop through data array using map function and will set state
+  //   using selectOptions value.
   async getOptions() {
     const data = await (
       await axios.get(
@@ -42,35 +49,20 @@ class AddPatientTest extends Component {
     this.setState({ selectOptions: options });
   }
 
+  // handles the change of the input value .
   handleChange(e) {
     this.setState({ patientId: e.value, patientFirstName: e.label });
   }
 
   componentDidMount() {
+    // if (sessionStorage.getItem("username") === null) {
+    //   alert('Unauthorized Access');
+    //   this.props.history.push("/");
+    // }
     this.getOptions();
   }
 
-  // componentDidMount() {
-  //   if (sessionStorage.getItem("username") === null) {
-  //     alert('Unauthorized Access');
-  //     this.props.history.push("/");
-  //   }
-  //   this.service.getAllDepartment()
-  //     .then((result) => {
-  //       let depts = result.data.map((dept) => {
-  //         return { value: dept.departmentId, display: dept.departmentName };
-  //       });
-  //       this.setState({
-  //         departments: [{ value: "-1", display: "Select Department" }].concat(
-  //           depts
-  //         ),
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       alert(JSON.stringify("error: " + error));
-  //     });
-  // }
-
+  // this function will check if input fields are null or not.
   validate = () => {
     let flag = true;
     let error = {};
@@ -84,12 +76,13 @@ class AddPatientTest extends Component {
     }
     if (!this.state.covidTest.result) {
       flag = false;
-      error.lnameError = "Patient test result is Required";
+      error.resultError = "Patient test result is Required";
     }
     this.setState({ error: error });
     return flag;
   };
 
+  // will check the validate function and then handle the form submission on submit button.
   handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -102,9 +95,8 @@ class AddPatientTest extends Component {
     this.service
       .addPatientTestDetails(this.state.patientId, this.state.covidTest)
       .then((data) => {
-        alert(JSON.stringify(data));
         // redirect you to Home component after adding user
-        // this.props.history.push("/patients");
+        this.props.history.push("/patient");
       })
       .catch((error) => {
         alert(JSON.stringify(error));
@@ -114,85 +106,96 @@ class AddPatientTest extends Component {
       });
   };
 
+  //render is used to render the React JSX content into DOM.
   render() {
     return (
-      <div className="container-fluid" style={{ backgroundColor: "#dfe3ee" }}>
-        <div className="row">
-          <div className="col-2"></div>
-          <div
-            className="col-lg-8 col-md-6 col-xs-12 my-4"
-            style={{ backgroundColor: "#8b9dc3" }}
-          >
-            <form onSubmit={this.handleSubmit}>
-              <h3 align="center" className="mt-2">
-                <span className="badge badge-dark">
-                  Add Patient Test Details
-                </span>
-              </h3>
-              <div className="form-group mr2">
-                <label>Select Patient:</label>
-                <div className="alert-danger">{this.state.error.idError}</div>
-                <Select
-                  // type="text"
-                  // className="form-control"
-                  // id="patientId"
-                  // placeholder="Enter patient Id"
-                  // value={this.state.patient.patientId}
-                  options={this.state.selectOptions}
-                  onChange={this.handleChange.bind(this)}
-                  // onChange={(event) =>
-                  //   this.setState({ patient: { ...this.state.patient, patientId: event.target.value } })
-                  // }
-                />
-              </div>
-              <div className="form-group">
-                <label>Select Patient Test Date:</label>
-                <div className="alert-danger">{this.state.error.dateError}</div>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="testDate"
-                  placeholder="Enter patients testdate"
-                  value={this.state.covidTest.testDate}
-                  onChange={(event) =>
-                    this.setState({
-                      covidTest: {
-                        ...this.state.covidTest,
-                        testDate: event.target.value,
-                      },
-                    })
-                  }
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Select Test Result:</label>
-                <div className="alert-danger">
-                  {this.state.error.resultError}
+      <div className="container-fluid px-1 py-3 mx-auto">
+        <div className="row d-flex justify-content-center">
+          <div className="col-xl-7 col-lg-8 col-md-9 col-12">
+            <div className="card">
+              <form onSubmit={this.handleSubmit}>
+                <h3 align="center" className="mt-2">
+                  <span className="badge badge-dark">
+                    Add Patient Test Details
+                  </span>
+                </h3>
+                <div className="form-group mr2">
+                  <label className="form-control-label">
+                    Select Patient:<span className="text-danger"> *</span>
+                  </label>
+                  <div className="alert-danger">{this.state.error.idError}</div>
+                  <Select
+                    // type="text"
+                    //data-testid="testpatientId"
+                    // className="form-control"
+                    // id="patientId"
+                    // placeholder="Enter patient Id"
+                    // value={this.state.patient.patientId}
+                    options={this.state.selectOptions}
+                    onChange={this.handleChange.bind(this)}
+                    // onChange={(event) =>
+                    //   this.setState({ patient: { ...this.state.patient, patientId: event.target.value } })
+                    // }
+                  />
                 </div>
-                <select
-                  type="text"
-                  className="form-control"
-                  id="result"
-                  value={this.state.covidTest.result}
-                  onChange={(event) =>
-                    this.setState({
-                      covidTest: {
-                        ...this.state.covidTest,
-                        result: event.target.value,
-                      },
-                    })
-                  }
-                >
-                  <option>......</option>
-                  <option>Negative</option>
-                  <option>Positive</option>
-                </select>
-              </div>
-              <button type="submit" className="btn btn-warning my-2">
-                Add Patient Test
-              </button>
-            </form>
+                <div className="form-group">
+                  <label className="form-control-label">
+                    Select Patient Test Date:
+                    <span className="text-danger"> *</span>
+                  </label>
+                  <div className="alert-danger">
+                    {this.state.error.dateError}
+                  </div>
+                  <input
+                    type="date"
+                    data-testid="testDate"
+                    className="form-control"
+                    id="testDate"
+                    placeholder="Enter patients testdate"
+                    value={this.state.covidTest.testDate}
+                    onChange={(event) =>
+                      this.setState({
+                        covidTest: {
+                          ...this.state.covidTest,
+                          testDate: event.target.value,
+                        },
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-control-label">
+                    Select Test Result:<span className="text-danger"> *</span>
+                  </label>
+                  <div className="alert-danger">
+                    {this.state.error.resultError}
+                  </div>
+                  <select
+                    type="text"
+                    data-testid="testResult"
+                    className="form-control"
+                    id="result"
+                    value={this.state.covidTest.result}
+                    onChange={(event) =>
+                      this.setState({
+                        covidTest: {
+                          ...this.state.covidTest,
+                          result: event.target.value,
+                        },
+                      })
+                    }
+                  >
+                    <option>......</option>
+                    <option>Negative</option>
+                    <option>Positive</option>
+                  </select>
+                </div>
+                <button type="submit" className="btn btn-info my-2">
+                  Add Patient Test
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

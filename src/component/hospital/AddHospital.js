@@ -1,16 +1,14 @@
-import { AddCircle, AddLocation, ThreeSixty } from "@material-ui/icons";
-import React, { Component, component } from "react";
+import { Button, IconButton } from "@material-ui/core";
+import { AddCircle } from "@material-ui/icons";
+import axios from "axios";
+import React, { Component } from "react";
+import Select from "react-select";
 import { Admin } from "../../model/Admin";
 import { Hospital } from "../../model/Hospital";
 import { HospitalType } from "../../model/HospitalType";
 import { HospitalZone } from "../../model/HospitalZone";
 import { AdminService } from "../../service/adminservice/AdminService";
-import axios from "axios";
-import Select from "react-select";
-import { Link } from "react-router-dom";
-import { HospitalService } from "../../service/hospitalservice/HospitalService";
 import "../../styles/design.css";
-import { Button, Icon, IconButton } from "@material-ui/core";
 
 class AddHospital extends Component {
   async getOptions() {
@@ -135,7 +133,7 @@ class AddHospital extends Component {
         this.state.admin.adminId
       )
       .then((result) => {
-        this.props.history.push("/hospitals");
+        this.props.history.push("/hospital");
       })
       .catch((error) => {
         alert(JSON.stringify(error));
@@ -144,13 +142,6 @@ class AddHospital extends Component {
 
   render() {
     return (
-      // <form
-      //   onSubmit={this.handleSubmit}
-      //   style={{ borderStyle: "solid", marginTop: "50px" }}
-      // >
-      //   <h1>
-      //     <span className="badge badge-dark">Add Hospital</span>
-      //   </h1>
       <div className="container-fluid px-1 py-5 mx-auto">
         <div className="row d-flex justify-content-center">
           <div className="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
@@ -170,6 +161,7 @@ class AddHospital extends Component {
                       style={{}}
                       type="text"
                       className="form-control"
+                      data-testid="HospitalName"
                       id="hospitalName"
                       placeholder="Enter hospital Name"
                       value={this.state.hospital.hospitalName}
@@ -199,6 +191,7 @@ class AddHospital extends Component {
                       min={0}
                       className="form-control"
                       id="hospitalGeneralBed"
+                      data-testid="GeneralBed"
                       placeholder="General Beds"
                       value={this.state.hospital.hospitalGeneralBed}
                       onChange={(event) =>
@@ -227,6 +220,7 @@ class AddHospital extends Component {
                       min={0}
                       className="form-control"
                       id="hospitalICUBed"
+                      data-testid="ICUBed"
                       placeholder="ICU Bed"
                       value={this.state.hospital.hospitalICUBed}
                       onChange={(event) =>
@@ -251,12 +245,13 @@ class AddHospital extends Component {
 
                   <div className="form-group col-1 flex-column d-flex">
                     <IconButton>
-                      <Link
-                        to="/AddHospitalZone"
-                        style={{ textDecoration: "none" }}
+                      <Button
+                        onClick={() =>
+                          this.props.history.push("/addHospitalZone")
+                        }
                       >
                         <AddCircle fontSize="large" className="text-primary" />
-                      </Link>
+                      </Button>
                     </IconButton>
                   </div>
                 </div>
@@ -268,9 +263,9 @@ class AddHospital extends Component {
                   ></Select>
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary">
                   Add Hospital
-                </button>
+                </Button>
               </form>
             </div>
           </div>

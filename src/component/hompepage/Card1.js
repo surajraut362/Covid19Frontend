@@ -1,17 +1,23 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import nurse from "../images/nurse.png";
-import "../hompepage/style.css";
+// import '../hompepage/style.css';
 export default function Mycards() {
   return (
-    <div>
-      <Card style={{ width: "18rem", backgroundColor: "lightgreen" }}>
-        <Card.Img variant="top" src={nurse} fluid />
+    <div style={{ backgroundColor: "#FCF3CF" }}>
+      <Card
+        style={{
+          width: "18rem",
+          height: "20rem",
+          backgroundColor: "lightgreen",
+        }}
+      >
+        <Card.Img variant="top" src={nurse} />
         <Card.Body>
           <Card.Text>
             Get the help-line numbers of each city for Medical Assistance
           </Card.Text>
-          <Button variant="warning" size="sm">
+          <Button variant="warning" size="sm" className="mb-4">
             {" "}
             <a
               style={{ textDecoration: "none" }}

@@ -3,7 +3,7 @@ import randomColor from "randomcolor";
 
 // javascipt plugin for creating charts
 // react plugin used to create charts
-import { Line, Bar, Pie } from "react-chartjs-2";
+import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
 // @material-ui/core components
 import red from "@material-ui/core/colors/red";
 // core components
@@ -14,27 +14,27 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
 // core components
 
-import { blue, green, lime, purple } from "@material-ui/core/colors";
+import { blue, green, lime, purple, yellow } from "@material-ui/core/colors";
 import { UserService } from "../../service/userservice/UserService.js";
 import axios from "axios";
 import { DeathService } from "../../service/deathservice/DeathService.js";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 
 function Charts(props) {
-  const [activeNav, setActiveNav] = React.useState(1);
   let userService = new UserService();
-  const [cases, setCases] = useState({});
-  const [records, setRecords] = useState([[], [], [], []]);
+
+  const [activeNav, setActiveNav] = React.useState(1);
   const [recoveredArray, setRecoveredArray] = useState([]);
   const [activeArray, setActiveArray] = useState([]);
   const [deathArray, setDeathArray] = useState([]);
   const [confirmedArray, setConfirmedArray] = useState([]);
   const [cardTitle, setCardTitle] = useState([]);
   const [cardFooter, setCardFooter] = useState([]);
-
+  const [records, setRecords] = useState([[], [], [], []]);
   const [label, setLabel] = useState([[], [], [], []]);
   const [colors, setColors] = useState([[], [], [], []]);
   // const [index, setIndex] = useState(0);
@@ -82,8 +82,10 @@ function Charts(props) {
       const zoneData = await (
         await userService.findTotalDataBasedOnZone()
       ).data;
+
       records[2] = [];
       label[2] = [];
+
       for (const dataObj of Object.values(zoneData)) {
         records[2].push(dataObj["death"]);
         cardTitle.push(Object.values(dataObj));
@@ -96,9 +98,10 @@ function Charts(props) {
         cardFooter.push(dataObj);
       }
       setCardFooter(cardFooter);
-
       setLabel(label);
+
       setInfo();
+
       let deathService = new DeathService();
       records[1] = await deathService.findAllMonthWiseDeath();
       records[3] = await deathService.findAllAgeWiseDeath();
@@ -114,12 +117,6 @@ function Charts(props) {
       const totalRecoveredCases = await (
         await userService.findTotalRecoveredCases()
       ).data;
-      setCases({
-        totalConfirmedCases,
-        totalActiveCases,
-        totalDeathCases,
-        totalRecoveredCases,
-      });
 
       const data = await (
         await axios.get(
@@ -159,116 +156,59 @@ function Charts(props) {
         </div>
       </Container>
       {/* Page content */}
-      <Container maxWidth={false} component={Box} marginTop="10px">
+      <Container maxWidth={false} component={Box} marginY="20px">
         <Grid container spacing={2}>
           <Grid
             item
             xs={12}
             lg={6}
             component={Box}
-            marginBottom="3rem!important"
+            marginBottom="0.5rem!important"
+            marginTop="0.5rem!important"
           >
             <Card elevation={5}>
-              {/* <CardHeader
-                subheader={
-                  <Grid
-                    container
-                    component={Box}
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Grid item xs="auto">
-                      <Box
-                        component={Typography}
-                        variant="h6"
-                        letterSpacing=".0625rem"
-                        marginBottom=".25rem!important"
-                      >
-                        <Box component="span">Case:</Box>
-                      </Box>
-                      <Box
-                        component={Typography}
-                        variant="h4"
-                        marginBottom="0!important"
-                      >
-                        <Box component="span">Covid Cases graph</Box>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                }
-              ></CardHeader> */}
               <CardContent>
                 <Box position="relative" height="350px">
-                  <Line
+                  <Doughnut
                     data={{
-                      labels: [
-                        "Jan",
-                        "Feb",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                      ],
+                      labels: ["Active", "Dead", "Recovered"],
                       datasets: [
                         {
-                          data: confirmedArray,
+                          data: [
+                            activeArray[activeArray.length - 1],
+                            deathArray[deathArray.length - 1],
+                            recoveredArray[recoveredArray.length - 1],
+                          ],
                           label: "Confirmed Cases",
-                          borderColor: blue[300],
-                          backgroundColor: blue[300],
-                          fill: false,
+                          borderColor: [lime[500], red[500], green[500]],
+                          backgroundColor: [lime[200], red[200], green[200]],
                         },
                       ],
                     }}
                     options={{
                       title: {
                         display: true,
-                        text: "Monthly Rise of Cases:",
+                        text: `Total Cases Distribution
+                                Total Cases: ${
+                                  confirmedArray[confirmedArray.length - 1]
+                                }`,
                       },
                       responsive: true,
-                      animations: {
-                        tension: {
-                          duration: 10000000,
-                          easing: "linear",
-                          from: 1,
-                          to: 1,
-                          loop: true,
-                        },
-                      },
                       maintainAspectRatio: false,
-                      scales: {
-                        y: {
-                          min: 0,
-                          max: 100,
-                        },
-                        yAxes: [
-                          {
-                            ticks: {
-                              callback: function (value) {
-                                if (value >= 1000) {
-                                  return `${value / 1000}k`;
-                                } else {
-                                  return value;
-                                }
-                              },
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
                     }}
-                    getDatasetAtEvent={(e) => console.log(e)}
                   />
                 </Box>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} lg={6} className=" mb-0 mt-0">
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            component={Box}
+            marginBottom="0.5rem!important"
+            marginTop="0.5rem!important"
+          >
             <Card elevation={5}>
               <CardContent>
                 <Box position="relative" height="350px">
@@ -341,7 +281,9 @@ function Charts(props) {
             xs={12}
             lg={6}
             component={Box}
-            marginBottom="3rem!important"
+            marginBottom="0.5rem!important"
+            marginTop="0.5rem!important"
+            // spacing={2}
           >
             <Card elevation={5}>
               <CardHeader></CardHeader>
@@ -379,8 +321,6 @@ function Charts(props) {
                           pointBackgroundColor: "rgb(255, 255, 255)",
                           pointBorderWidth: 10,
                           pointHoverRadius: 5,
-                          pointHoverBackgroundColor: "rgb(0, 0, 0)",
-                          pointHoverBorderColor: "rgba(220, 220, 220, 1)",
                           pointHoverBorderWidth: 2,
                           pointRadius: 1,
                           pointHitRadius: 10,
@@ -388,23 +328,61 @@ function Charts(props) {
                         {
                           data: activeArray,
                           label: "Total Active Cases",
-                          borderColor: lime[300],
-                          fill: false,
-                          backgroundColor: lime[300],
+                          borderColor: lime[400],
+                          fill: true,
+                          backgroundColor: "rgba(210, 190, 170, .3)",
+                          borderCapStyle: "butt",
+                          borderDash: [],
+                          lineTension: 0.3,
+
+                          borderDashOffset: 0.0,
+                          borderJoinStyle: "miter",
+                          pointBorderColor: lime[400],
+                          pointBackgroundColor: "rgb(255, 255, 255)",
+                          pointBorderWidth: 10,
+                          pointHoverRadius: 5,
+                          pointHoverBorderWidth: 2,
+                          pointRadius: 1,
+                          pointHitRadius: 10,
                         },
                         {
                           data: deathArray,
                           label: "Total Deceased Cases",
-                          borderColor: red[300],
-                          fill: false,
-                          backgroundColor: red[300],
+                          borderColor: red[400],
+                          backgroundColor: "rgba(210, 180, 180, .3)",
+                          fill: true,
+                          borderCapStyle: "butt",
+                          borderDash: [],
+                          borderDashOffset: 0.0,
+                          borderJoinStyle: "miter",
+                          lineTension: 0.3,
+
+                          pointBorderColor: red[490],
+                          pointBackgroundColor: "rgb(255, 255, 255)",
+                          pointBorderWidth: 10,
+                          pointHoverRadius: 5,
+                          pointHoverBorderWidth: 2,
+                          pointRadius: 1,
+                          pointHitRadius: 10,
                         },
                         {
                           data: recoveredArray,
                           label: "Total Recovered Cases",
-                          borderColor: green[300],
-                          fill: false,
-                          backgroundColor: green[300],
+                          borderColor: green[400],
+
+                          backgroundColor: "rgba(170, 170, 220, .3)",
+                          fill: true,
+                          borderCapStyle: "butt",
+                          borderDash: [],
+                          borderDashOffset: 0.0,
+                          borderJoinStyle: "miter",
+                          pointBorderColor: green[400],
+                          pointBackgroundColor: "rgb(255, 255, 255)",
+                          pointBorderWidth: 10,
+                          pointHoverRadius: 5,
+                          pointHoverBorderWidth: 2,
+                          pointRadius: 1,
+                          pointHitRadius: 10,
                         },
                       ],
                     }}
@@ -435,29 +413,28 @@ function Charts(props) {
             item
             xs={12}
             lg={6}
+            // spacing={2}
             component={Box}
-            marginBottom="3rem!important"
+            marginBottom="0.5rem!important"
+            marginTop="0.5rem!important"
           >
             <Card elevation={5}>
-              <Grid item xs="auto">
-                <CardHeader></CardHeader>
-                <Box>
-                  {/* <ToggleButtonGroup
-                    value={activeNav}
-                    size="small"
-                    onChange={(e, value) => {
-                      if (value !== null) setActiveNav(value);
-                    }}
-                    aria-label="text alignment"
-                    className=""
-                  >
-                    <ToggleButton value={1} aria-label="left aligned">
-                      {/* <FormatAlignLeftIcon /> Monthly
-                   */}
-                </Box>
-              </Grid>
-
               <CardContent>
+                <Grid item xs="auto">
+                  <Box>
+                    <ToggleButtonGroup
+                      name="value"
+                      type="radio"
+                      value={activeNav}
+                      onChange={(e) => setActiveNav(e)}
+                    >
+                      <ToggleButton value={1}>Monthly</ToggleButton>
+                      <ToggleButton value={2}>Zone</ToggleButton>
+                      <ToggleButton value={3}>Age</ToggleButton>
+                      <ToggleButton value={4}>Gender</ToggleButton>
+                    </ToggleButtonGroup>
+                  </Box>
+                </Grid>
                 <Box position="relative" height="350px">
                   <Pie
                     data={{
@@ -478,8 +455,8 @@ function Charts(props) {
                         text: "Division By Death Cases:",
                         display: true,
                       },
-
-                      maintainAspectRatio: true,
+                      responsive: true,
+                      maintainAspectRatio: false,
                     }}
                   />
                 </Box>

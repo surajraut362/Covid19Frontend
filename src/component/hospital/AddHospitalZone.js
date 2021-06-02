@@ -34,7 +34,6 @@ class AddHospitalZone extends Component {
     this.service
       .addHospitalZone(this.state.zone)
       .then((data) => {
-        alert(JSON.stringify(data));
         this.props.history.push("/addHospital");
       })
       .catch((error) => {
@@ -44,29 +43,52 @@ class AddHospitalZone extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={{ marginTop: "50px" }}>
-        <h1>
-          <span className="badge badge-dark">Add Hospital Zone</span>
-        </h1>
-        <div className="form-group mr2">
-          <div className="alert-danger">{this.state.error.nameError}</div>
-          <input
-            type="text"
-            className="form-control"
-            id="zoneName"
-            placeholder="Enter Hospital Zone Name"
-            value={this.state.zone.zoneName}
-            onChange={(event) =>
-              this.setState({
-                zone: { ...this.state.zone, zoneName: event.target.value },
-              })
-            }
-          />
+      // <form  style={{ marginTop: "50px" }}>
+      //   <h1>
+      //     <span className="badge badge-dark">Add Hospital Zone</span>
+      //   </h1>
+      <div className="container-fluid px-1 py-5 mx-auto">
+        <div className="row d-flex justify-content-center">
+          <div className="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div className="card">
+              <h5 className="text-center mb-4">Add Hospital Zone</h5>
+              <form className="form-card " onSubmit={this.handleSubmit}>
+                <div className="row justify-content-between text-left">
+                  <div className="form-group col-sm-12 flex-column d-flex">
+                    <label className="form-control-label px-3">
+                      Enter Hospital Zone Name
+                      <span className="text-danger"> *</span>
+                    </label>
+                    <div className="alert-danger">
+                      {this.state.error.nameError}
+                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="zoneName"
+                      data-testid="ZoneName"
+                      placeholder="Enter Hospital Zone Name"
+                      value={this.state.zone.zoneName}
+                      onChange={(event) =>
+                        this.setState({
+                          zone: {
+                            ...this.state.zone,
+                            zoneName: event.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                  Add Hospital Zone
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Add Hospital Zone
-        </button>
-      </form>
+      </div>
     );
   }
 }

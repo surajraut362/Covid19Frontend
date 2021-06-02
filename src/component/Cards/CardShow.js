@@ -23,12 +23,10 @@ class CardShow extends React.Component {
     setInterval(() => {
       if (this.state.index === this.props.cardFooter.length) {
         this.setState({ index: 0 });
-        console.log(this.state.index);
       } else {
         this.setState((prev) => {
           return { index: prev.index + 1 };
         });
-        console.log(this.state.index);
       }
     }, 3500);
   }
