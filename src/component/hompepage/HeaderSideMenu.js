@@ -19,13 +19,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import LogoutComponent from "../pages/LogoutComponent";
 import { AccountCircle } from "@material-ui/icons";
 import header from "../images/mylogo.png";
-import { Box } from "@material-ui/core";
+import { Box, LinearProgress } from "@material-ui/core";
 const drawerWidth = 170;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    marginBottom: "-44px",
+    marginBottom: "12px",
+    width: "100%",
   },
   appBar: {
     backgroundColor: "#ededed",
@@ -96,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
     textAlign: "center",
     marginRight: 2,
-    fontSize: 25,
   },
 
   userName: {
@@ -149,6 +149,7 @@ function HeaderSideMenu(props) {
   return (
     <div className={classes.root} data-testid="headersidemenu">
       <CssBaseline />
+
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -241,7 +242,6 @@ function HeaderSideMenu(props) {
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.drawerHeader}>
-          <h6 className={classes.menuTitle}>Menu</h6>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />

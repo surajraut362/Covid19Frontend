@@ -1,5 +1,5 @@
 import { Route, Switch } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginComponent from "./component/pages/LoginComponent";
 import AdminDashBoard from "./component/admin/AdminDashBoard";
 import HomePage from "./component/hompepage/HomePage";
@@ -23,8 +23,10 @@ import Guidelines from "./component/pages/Guidelines";
 import Contact from "./component/pages/Contact";
 
 function Routes(props) {
-  const [state, setstate] = useState(sessionStorage.getItem("username"));
-
+  const [state, setState] = useState(sessionStorage.getItem("username"));
+  useEffect(() => {
+    setState(sessionStorage.getItem("username"));
+  }, [props.location.key]);
   return state ? (
     <>
       <Route exact path="/" component={HomePage} />

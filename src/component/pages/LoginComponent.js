@@ -58,8 +58,6 @@ export default class LoginComponent extends Component {
         }
       })
       .catch((error) => {
-        alert(error);
-
         this.setState({ error: { invalidCredentials: "Invalid Credentials" } });
       });
   };
@@ -70,15 +68,14 @@ export default class LoginComponent extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <div className="container-fluid">
-            <div className="card ">
+            <div className=" m-0">
               <div className="row ">
                 <div className="col-lg-12 d-flex justify-content-center">
-                  <div className="card2 card border-0  px-4 py-5">
+                  <div className="card2 card border-0  px-4 py-5 ">
+                    {/* <div className="alert-danger mt-0">
+                    </div> */}
                     <div className="row px-3">
                       {" "}
-                      <div className="alert-danger">
-                        {this.state.error.usernameError}
-                      </div>
                       <label className="mb-1">
                         <h6 className="mb-0 text-sm">Username</h6>
                       </label>{" "}
@@ -86,6 +83,7 @@ export default class LoginComponent extends Component {
                         className="mb-4"
                         type="text"
                         name="email"
+                        required
                         placeholder="Enter a valid Username"
                         value={this.state.login.username}
                         onChange={(event) =>
@@ -104,6 +102,7 @@ export default class LoginComponent extends Component {
                         <h6 className="mb-0 text-sm">Password</h6>
                       </label>{" "}
                       <input
+                        required
                         type="password"
                         name="password"
                         placeholder="Enter password"

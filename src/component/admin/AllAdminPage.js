@@ -65,7 +65,7 @@ function AllAdminPage({ history, hospitalsData, fetchHospitals }) {
           DetailPanel: () => <div />,
           Edit: () => <Edit></Edit>,
         }}
-        title="Customer Data"
+        title="Admin Data"
         data={data}
         columns={columns}
         options={{

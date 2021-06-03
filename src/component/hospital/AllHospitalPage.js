@@ -15,13 +15,14 @@ import Table from "material-table";
 import Edit from "@material-ui/icons/Edit";
 import FilterList from "@material-ui/icons/FilterList";
 import { Component } from "react";
+import { LinearProgress } from "@material-ui/core";
 
 function AllHospitalPage({ hospitalsData, fetchHospitals, ...props }) {
   useEffect(() => {
     fetchHospitals();
   }, []);
   return hospitalsData.loading ? (
-    <h2>Loading...</h2>
+    <LinearProgress className="bg-primary mt-0" />
   ) : hospitalsData.error ? (
     <h2>{hospitalsData.error}</h2>
   ) : (

@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
-import MaterialTable from "material-table";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Search, ArrowUpward, Delete, Cancel } from "@material-ui/icons";
+import { LinearProgress } from "@material-ui/core";
+import {
+  Cancel,
+  ChevronLeftTwoTone,
+  ChevronRightTwoTone,
+  Search,
+} from "@material-ui/icons";
 import Edit from "@material-ui/icons/Edit";
 import FilterList from "@material-ui/icons/FilterList";
+import MaterialTable from "material-table";
+import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchHospitals } from "../../redux/hospitalActions";
-
-import { withWidth } from "@material-ui/core";
 
 {
   /*function for view Patient  material table */
@@ -35,17 +39,8 @@ function ViewPatient({ hospitalData, fetchHospitals, ...props }) {
     });
   }, []);
 
-  // useEffect(() => {
-  //   //    if (sessionStorage.getItem("username") === null) {
-  //   //    history.push("/");
-  //   //  }
-  //   fetch(`http://localhost:9090/CovidTracker.com/patients/allpatients`)
-  //     .then((resp) => resp.json())
-  //     .then((resp) => setData(resp));
-  // }, []);
-
   return hospitalData.loading ? (
-    <p></p>
+    <LinearProgress className="mt-0 bg-primary " />
   ) : hospitalData.error ? (
     <h2>{hospitalData.error}</h2>
   ) : (
@@ -89,8 +84,8 @@ function ViewPatient({ hospitalData, fetchHospitals, ...props }) {
                 Search: () => <Search></Search>,
                 LastPage: () => <div />,
                 FirstPage: () => <div />,
-                PreviousPage: () => <Button size="sm">Prev</Button>,
-                NextPage: () => <Button size="sm">Next</Button>,
+                PreviousPage: () => <ChevronLeftTwoTone />,
+                NextPage: () => <ChevronRightTwoTone />,
                 ResetSearch: () => <Cancel></Cancel>,
                 SortArrow: () => <FilterList></FilterList>,
                 DetailPanel: () => <div />,
